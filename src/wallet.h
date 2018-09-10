@@ -23,8 +23,8 @@
 #include "validationinterface.h"
 #include "wallet_ismine.h"
 #include "walletdb.h"
-#include "zfrostwallet.h"
-#include "zfrosttracker.h"
+#include "zmbposwallet.h"
+#include "zmbpostracker.h"
 
 #include <algorithm>
 #include <map>
@@ -84,30 +84,30 @@ enum AvailableCoinsType {
     ALL_COINS = 1,
     ONLY_DENOMINATED = 2,
     ONLY_NOT10000IFMN = 3,
-    ONLY_NONDENOMINATED_NOT10000IFMN = 4, // ONLY_NONDENOMINATED and not 10000 FROST at the same time
+    ONLY_NONDENOMINATED_NOT10000IFMN = 4, // ONLY_NONDENOMINATED and not 10000 MBPOS at the same time
     ONLY_10000 = 5,                        // find masternode outputs including locked ones (use with caution)
     STAKABLE_COINS = 6                          // UTXO's that are valid for staking
 };
 
-// Possible states for zFROST send
+// Possible states for zMBPOS send
 enum ZerocoinSpendStatus {
-    ZFROST_SPEND_OKAY = 0,                            // No error
-    ZFROST_SPEND_ERROR = 1,                           // Unspecified class of errors, more details are (hopefully) in the returning text
-    ZFROST_WALLET_LOCKED = 2,                         // Wallet was locked
-    ZFROST_COMMIT_FAILED = 3,                         // Commit failed, reset status
-    ZFROST_ERASE_SPENDS_FAILED = 4,                   // Erasing spends during reset failed
-    ZFROST_ERASE_NEW_MINTS_FAILED = 5,                // Erasing new mints during reset failed
-    ZFROST_TRX_FUNDS_PROBLEMS = 6,                    // Everything related to available funds
-    ZFROST_TRX_CREATE = 7,                            // Everything related to create the transaction
-    ZFROST_TRX_CHANGE = 8,                            // Everything related to transaction change
-    ZFROST_TXMINT_GENERAL = 9,                        // General errors in MintToTxIn
-    ZFROST_INVALID_COIN = 10,                         // Selected mint coin is not valid
-    ZFROST_FAILED_ACCUMULATOR_INITIALIZATION = 11,    // Failed to initialize witness
-    ZFROST_INVALID_WITNESS = 12,                      // Spend coin transaction did not verify
-    ZFROST_BAD_SERIALIZATION = 13,                    // Transaction verification failed
-    ZFROST_SPENT_USED_ZFROST = 14,                      // Coin has already been spend
-    ZFROST_TX_TOO_LARGE = 15,                          // The transaction is larger than the max tx size
-    ZFROST_SPEND_V1_SEC_LEVEL                         // Spend is V1 and security level is not set to 100
+    ZMBPOS_SPEND_OKAY = 0,                            // No error
+    ZMBPOS_SPEND_ERROR = 1,                           // Unspecified class of errors, more details are (hopefully) in the returning text
+    ZMBPOS_WALLET_LOCKED = 2,                         // Wallet was locked
+    ZMBPOS_COMMIT_FAILED = 3,                         // Commit failed, reset status
+    ZMBPOS_ERASE_SPENDS_FAILED = 4,                   // Erasing spends during reset failed
+    ZMBPOS_ERASE_NEW_MINTS_FAILED = 5,                // Erasing new mints during reset failed
+    ZMBPOS_TRX_FUNDS_PROBLEMS = 6,                    // Everything related to available funds
+    ZMBPOS_TRX_CREATE = 7,                            // Everything related to create the transaction
+    ZMBPOS_TRX_CHANGE = 8,                            // Everything related to transaction change
+    ZMBPOS_TXMINT_GENERAL = 9,                        // General errors in MintToTxIn
+    ZMBPOS_INVALID_COIN = 10,                         // Selected mint coin is not valid
+    ZMBPOS_FAILED_ACCUMULATOR_INITIALIZATION = 11,    // Failed to initialize witness
+    ZMBPOS_INVALID_WITNESS = 12,                      // Spend coin transaction did not verify
+    ZMBPOS_BAD_SERIALIZATION = 13,                    // Transaction verification failed
+    ZMBPOS_SPENT_USED_ZMBPOS = 14,                      // Coin has already been spend
+    ZMBPOS_TX_TOO_LARGE = 15,                          // The transaction is larger than the max tx size
+    ZMBPOS_SPEND_V1_SEC_LEVEL                         // Spend is V1 and security level is not set to 100
 };
 
 struct CompactTallyItem {
@@ -213,15 +213,15 @@ public:
     std::string ResetMintZerocoin();
     std::string ResetSpentZerocoin();
     void ReconsiderZerocoins(std::list<CZerocoinMint>& listMintsRestored, std::list<CDeterministicMint>& listDMintsRestored);
-    void ZFrostBackupWallet();
+    void ZMbPosBackupWallet();
     bool GetZerocoinKey(const CBigNum& bnSerial, CKey& key);
-    bool CreateZFROSTOutPut(libzerocoin::CoinDenomination denomination, CTxOut& outMint, CDeterministicMint& dMint);
+    bool CreateZMBPOSOutPut(libzerocoin::CoinDenomination denomination, CTxOut& outMint, CDeterministicMint& dMint);
     bool GetMint(const uint256& hashSerial, CZerocoinMint& mint);
     bool GetMintFromStakeHash(const uint256& hashStake, CZerocoinMint& mint);
     bool DatabaseMint(CDeterministicMint& dMint);
     bool SetMintUnspent(const CBigNum& bnSerial);
     bool UpdateMint(const CBigNum& bnValue, const int& nHeight, const uint256& txid, const libzerocoin::CoinDenomination& denom);
-    string GetUniqueWalletBackupName(bool fzfrostAuto) const;
+    string GetUniqueWalletBackupName(bool fzmbposAuto) const;
 
 
     /** Zerocin entry changed.
@@ -237,13 +237,13 @@ public:
      */
     mutable CCriticalSection cs_wallet;
 
-    CzFROSTWallet* zwalletMain;
+    CzMBPOSWallet* zwalletMain;
 
     bool fFileBacked;
     bool fWalletUnlockAnonymizeOnly;
     std::string strWalletFile;
     bool fBackupMints;
-    std::unique_ptr<CzFROSTTracker> zfrostTracker;
+    std::unique_ptr<CzMBPOSTracker> zmbposTracker;
 
     std::set<int64_t> setKeyPool;
     std::map<CKeyID, CKeyMetadata> mapKeyMetadata;
@@ -328,20 +328,20 @@ public:
         return nZeromintPercentage;
     }
 
-    void setZWallet(CzFROSTWallet* zwallet)
+    void setZWallet(CzMBPOSWallet* zwallet)
     {
         zwalletMain = zwallet;
-        zfrostTracker = std::unique_ptr<CzFROSTTracker>(new CzFROSTTracker(strWalletFile));
+        zmbposTracker = std::unique_ptr<CzMBPOSTracker>(new CzMBPOSTracker(strWalletFile));
     }
 
-    CzFROSTWallet* getZWallet() { return zwalletMain; }
+    CzMBPOSWallet* getZWallet() { return zwalletMain; }
 
     bool isZeromintEnabled()
     {
         return fEnableZeromint;
     }
 
-    void setZFrostAutoBackups(bool fEnabled)
+    void setZMbPosAutoBackups(bool fEnabled)
     {
         fBackupMints = fEnabled;
     }
@@ -669,8 +669,8 @@ public:
     /** MultiSig address added */
     boost::signals2::signal<void(bool fHaveMultiSig)> NotifyMultiSigChanged;
 
-    /** zFROST reset */
-    boost::signals2::signal<void()> NotifyzFROSTReset;
+    /** zMBPOS reset */
+    boost::signals2::signal<void()> NotifyzMBPOSReset;
 
     /** notify wallet file backed up */
     boost::signals2::signal<void (const bool& fSuccess, const std::string& filename)> NotifyWalletBacked;

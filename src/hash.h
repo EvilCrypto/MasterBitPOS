@@ -5,8 +5,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BIFROST_HASH_H
-#define BIFROST_HASH_H
+#ifndef BIMBPOS_HASH_H
+#define BIMBPOS_HASH_H
 
 #include "crypto/ripemd160.h"
 #include "crypto/sha256.h"
@@ -493,4 +493,4 @@ inline uint256 Hash9(const T1 pbegin, const T1 pend)
 }
 
 
-#endif // BIFROST_HASH_H
+#endif // BIMBPOS_HASH_H

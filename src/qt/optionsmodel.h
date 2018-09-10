@@ -48,7 +48,7 @@ public:
         ZeromintPercentage,  // int
         ZeromintPrefDenom,   // int
         HideZeroBalances,    // bool
-        AnonymizeBifrostAmount, //int
+        AnonymizeMasterBitPOSAmount, //int
         ShowMasternodesTab,  // bool
         Listen,              // bool
         StakeSplitThreshold, // int
@@ -100,7 +100,7 @@ signals:
     void zeromintEnableChanged(bool);
     void zeromintPercentageChanged(int);
     void preferredDenomChanged(int);
-    void anonymizeBifrostAmountChanged(int);
+    void anonymizeMasterBitPOSAmountChanged(int);
     void coinControlFeaturesChanged(bool);
     void hideZeroBalancesChanged(bool);
 };

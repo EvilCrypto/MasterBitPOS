@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BIFROST_ZFROSTCHAIN_H
-#define BIFROST_ZFROSTCHAIN_H
+#ifndef BIMBPOS_ZMBPOSCHAIN_H
+#define BIMBPOS_ZMBPOSCHAIN_H
 
 #include "libzerocoin/Coin.h"
 #include "libzerocoin/Denominations.h"
@@ -39,4 +39,4 @@ bool TxOutToPublicCoin(const CTxOut& txout, libzerocoin::PublicCoin& pubCoin, CV
 std::list<libzerocoin::CoinDenomination> ZerocoinSpendListFromBlock(const CBlock& block, bool fFilterInvalid);
 
 
-#endif //BIFROST_ZFROSTCHAIN_H
+#endif //BIMBPOS_ZMBPOSCHAIN_H

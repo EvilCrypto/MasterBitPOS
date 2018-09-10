@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BIFROST_STAKEINPUT_H
-#define BIFROST_STAKEINPUT_H
+#ifndef BIMBPOS_STAKEINPUT_H
+#define BIMBPOS_STAKEINPUT_H
 
 class CKeyStore;
 class CWallet;
@@ -22,15 +22,15 @@ public:
     virtual CAmount GetValue() = 0;
     virtual bool CreateTxOuts(CWallet* pwallet, vector<CTxOut>& vout, CAmount nTotal) = 0;
     virtual bool GetModifier(uint64_t& nStakeModifier) = 0;
-    virtual bool IsZFROST() = 0;
+    virtual bool IsZMBPOS() = 0;
     virtual CDataStream GetUniqueness() = 0;
 };
 
 
-// zFROSTStake can take two forms
+// zMBPOSStake can take two forms
 // 1) the stake candidate, which is a zcmint that is attempted to be staked
-// 2) a staked zfrost, which is a zcspend that has successfully staked
-class CZFrostStake : public CStakeInput
+// 2) a staked zmbpos, which is a zcspend that has successfully staked
+class CZMbPosStake : public CStakeInput
 {
 private:
     uint32_t nChecksum;
@@ -39,7 +39,7 @@ private:
     uint256 hashSerial;
 
 public:
-    explicit CZFrostStake(libzerocoin::CoinDenomination denom, const uint256& hashSerial)
+    explicit CZMbPosStake(libzerocoin::CoinDenomination denom, const uint256& hashSerial)
     {
         this->denom = denom;
         this->hashSerial = hashSerial;
@@ -47,7 +47,7 @@ public:
         fMint = true;
     }
 
-    explicit CZFrostStake(const libzerocoin::CoinSpend& spend);
+    explicit CZMbPosStake(const libzerocoin::CoinSpend& spend);
 
     CBlockIndex* GetIndexFrom() override;
     bool GetTxFrom(CTransaction& tx) override;
@@ -57,19 +57,19 @@ public:
     bool CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut = 0) override;
     bool CreateTxOuts(CWallet* pwallet, vector<CTxOut>& vout, CAmount nTotal) override;
     bool MarkSpent(CWallet* pwallet, const uint256& txid);
-    bool IsZFROST() override { return true; }
+    bool IsZMBPOS() override { return true; }
     int GetChecksumHeightFromMint();
     int GetChecksumHeightFromSpend();
     uint32_t GetChecksum();
 };
 
-class CFrostStake : public CStakeInput
+class CMbPosStake : public CStakeInput
 {
 private:
     CTransaction txFrom;
     unsigned int nPosition;
 public:
-    CFrostStake()
+    CMbPosStake()
     {
         this->pindexFrom = nullptr;
     }
@@ -83,8 +83,8 @@ public:
     CDataStream GetUniqueness() override;
     bool CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut = 0) override;
     bool CreateTxOuts(CWallet* pwallet, vector<CTxOut>& vout, CAmount nTotal) override;
-    bool IsZFROST() override { return false; }
+    bool IsZMBPOS() override { return false; }
 };
 
 
-#endif //BIFROST_STAKEINPUT_H
+#endif //BIMBPOS_STAKEINPUT_H

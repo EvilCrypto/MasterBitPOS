@@ -14,7 +14,7 @@
 - (NSString *)__bundleIdentifier
 {
     if (self == [NSBundle mainBundle]) {
-        return @"io.bifrost.Bifrost-Qt";
+        return @"io.masterbitpos.MasterBitPOS-Qt";
     } else {
         return [self __bundleIdentifier];
     }

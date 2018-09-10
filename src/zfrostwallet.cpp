@@ -2,18 +2,18 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "zfrostwallet.h"
+#include "zmbposwallet.h"
 #include "main.h"
 #include "txdb.h"
 #include "walletdb.h"
 #include "init.h"
 #include "wallet.h"
 #include "primitives/deterministicmint.h"
-#include "zfrostchain.h"
+#include "zmbposchain.h"
 
 using namespace libzerocoin;
 
-CzFROSTWallet::CzFROSTWallet(std::string strWalletFile)
+CzMBPOSWallet::CzMBPOSWallet(std::string strWalletFile)
 {
     this->strWalletFile = strWalletFile;
     CWalletDB walletdb(strWalletFile);
@@ -21,19 +21,19 @@ CzFROSTWallet::CzFROSTWallet(std::string strWalletFile)
     uint256 hashSeed;
     bool fFirstRun = !walletdb.ReadCurrentSeedHash(hashSeed);
 
-    //Check for old db version of storing zfrost seed
+    //Check for old db version of storing zmbpos seed
     if (fFirstRun) {
         uint256 seed;
-        if (walletdb.ReadZFROSTSeed_deprecated(seed)) {
+        if (walletdb.ReadZMBPOSSeed_deprecated(seed)) {
             //Update to new format, erase old
             seedMaster = seed;
             hashSeed = Hash(seed.begin(), seed.end());
             if (pwalletMain->AddDeterministicSeed(seed)) {
-                if (walletdb.EraseZFROSTSeed_deprecated()) {
-                    LogPrintf("%s: Updated zFROST seed databasing\n", __func__);
+                if (walletdb.EraseZMBPOSSeed_deprecated()) {
+                    LogPrintf("%s: Updated zMBPOS seed databasing\n", __func__);
                     fFirstRun = false;
                 } else {
-                    LogPrintf("%s: failed to remove old zfrost seed\n", __func__);
+                    LogPrintf("%s: failed to remove old zmbpos seed\n", __func__);
                 }
             }
         }
@@ -55,7 +55,7 @@ CzFROSTWallet::CzFROSTWallet(std::string strWalletFile)
         key.MakeNewKey(true);
         seed = key.GetPrivKey_256();
         seedMaster = seed;
-        LogPrintf("%s: first run of zfrost wallet detected, new seed generated. Seedhash=%s\n", __func__, Hash(seed.begin(), seed.end()).GetHex());
+        LogPrintf("%s: first run of zmbpos wallet detected, new seed generated. Seedhash=%s\n", __func__, Hash(seed.begin(), seed.end()).GetHex());
     } else if (!pwalletMain->GetDeterministicSeed(hashSeed, seed)) {
         LogPrintf("%s: failed to get deterministic seed for hashseed %s\n", __func__, hashSeed.GetHex());
         return;
@@ -68,7 +68,7 @@ CzFROSTWallet::CzFROSTWallet(std::string strWalletFile)
     this->mintPool = CMintPool(nCountLastUsed);
 }
 
-bool CzFROSTWallet::SetMasterSeed(const uint256& seedMaster, bool fResetCount)
+bool CzMBPOSWallet::SetMasterSeed(const uint256& seedMaster, bool fResetCount)
 {
 
     CWalletDB walletdb(strWalletFile);
@@ -84,8 +84,8 @@ bool CzFROSTWallet::SetMasterSeed(const uint256& seedMaster, bool fResetCount)
     nCountLastUsed = 0;
 
     if (fResetCount)
-        walletdb.WriteZFROSTCount(nCountLastUsed);
-    else if (!walletdb.ReadZFROSTCount(nCountLastUsed))
+        walletdb.WriteZMBPOSCount(nCountLastUsed);
+    else if (!walletdb.ReadZMBPOSCount(nCountLastUsed))
         nCountLastUsed = 0;
 
     mintPool.Reset();
@@ -93,18 +93,18 @@ bool CzFROSTWallet::SetMasterSeed(const uint256& seedMaster, bool fResetCount)
     return true;
 }
 
-void CzFROSTWallet::Lock()
+void CzMBPOSWallet::Lock()
 {
     seedMaster = 0;
 }
 
-void CzFROSTWallet::AddToMintPool(const std::pair<uint256, uint32_t>& pMint, bool fVerbose)
+void CzMBPOSWallet::AddToMintPool(const std::pair<uint256, uint32_t>& pMint, bool fVerbose)
 {
     mintPool.Add(pMint, fVerbose);
 }
 
 //Add the next 20 mints to the mint pool
-void CzFROSTWallet::GenerateMintPool(uint32_t nCountStart, uint32_t nCountEnd)
+void CzMBPOSWallet::GenerateMintPool(uint32_t nCountStart, uint32_t nCountEnd)
 {
 
     //Is locked
@@ -146,7 +146,7 @@ void CzFROSTWallet::GenerateMintPool(uint32_t nCountStart, uint32_t nCountEnd)
         CBigNum bnSerial;
         CBigNum bnRandomness;
         CKey key;
-        SeedToZFROST(seedZerocoin, bnValue, bnSerial, bnRandomness, key);
+        SeedToZMBPOS(seedZerocoin, bnValue, bnSerial, bnRandomness, key);
 
         mintPool.Add(bnValue, i);
         CWalletDB(strWalletFile).WriteMintPoolPair(hashSeed, GetPubCoinHash(bnValue), i);
@@ -155,7 +155,7 @@ void CzFROSTWallet::GenerateMintPool(uint32_t nCountStart, uint32_t nCountEnd)
 }
 
 // pubcoin hashes are stored to db so that a full accounting of mints belonging to the seed can be tracked without regenerating
-bool CzFROSTWallet::LoadMintPoolFromDB()
+bool CzMBPOSWallet::LoadMintPoolFromDB()
 {
     map<uint256, vector<pair<uint256, uint32_t> > > mapMintPool = CWalletDB(strWalletFile).MapMintPool();
 
@@ -166,20 +166,20 @@ bool CzFROSTWallet::LoadMintPoolFromDB()
     return true;
 }
 
-void CzFROSTWallet::RemoveMintsFromPool(const std::vector<uint256>& vPubcoinHashes)
+void CzMBPOSWallet::RemoveMintsFromPool(const std::vector<uint256>& vPubcoinHashes)
 {
     for (const uint256& hash : vPubcoinHashes)
         mintPool.Remove(hash);
 }
 
-void CzFROSTWallet::GetState(int& nCount, int& nLastGenerated)
+void CzMBPOSWallet::GetState(int& nCount, int& nLastGenerated)
 {
     nCount = this->nCountLastUsed + 1;
     nLastGenerated = mintPool.CountOfLastGenerated();
 }
 
 //Catch the counter up with the chain
-void CzFROSTWallet::SyncWithChain(bool fGenerateMintPool)
+void CzMBPOSWallet::SyncWithChain(bool fGenerateMintPool)
 {
     uint32_t nLastCountUsed = 0;
     bool found = true;
@@ -203,7 +203,7 @@ void CzFROSTWallet::SyncWithChain(bool fGenerateMintPool)
             if (ShutdownRequested())
                 return;
 
-            if (pwalletMain->zfrostTracker->HasPubcoinHash(pMint.first)) {
+            if (pwalletMain->zmbposTracker->HasPubcoinHash(pMint.first)) {
                 mintPool.Remove(pMint.first);
                 continue;
             }
@@ -280,7 +280,7 @@ void CzFROSTWallet::SyncWithChain(bool fGenerateMintPool)
     }
 }
 
-bool CzFROSTWallet::SetMintSeen(const CBigNum& bnValue, const int& nHeight, const uint256& txid, const CoinDenomination& denom)
+bool CzMBPOSWallet::SetMintSeen(const CBigNum& bnValue, const int& nHeight, const uint256& txid, const CoinDenomination& denom)
 {
     if (!mintPool.Has(bnValue))
         return error("%s: value not in pool", __func__);
@@ -292,7 +292,7 @@ bool CzFROSTWallet::SetMintSeen(const CBigNum& bnValue, const int& nHeight, cons
     CBigNum bnSerial;
     CBigNum bnRandomness;
     CKey key;
-    SeedToZFROST(seedZerocoin, bnValueGen, bnSerial, bnRandomness, key);
+    SeedToZMBPOS(seedZerocoin, bnValueGen, bnSerial, bnRandomness, key);
 
     //Sanity check
     if (bnValueGen != bnValue)
@@ -326,14 +326,14 @@ bool CzFROSTWallet::SetMintSeen(const CBigNum& bnValue, const int& nHeight, cons
         pwalletMain->AddToWallet(wtx);
     }
 
-    // Add to zfrostTracker which also adds to database
-    pwalletMain->zfrostTracker->Add(dMint, true);
+    // Add to zmbposTracker which also adds to database
+    pwalletMain->zmbposTracker->Add(dMint, true);
     
     //Update the count if it is less than the mint's count
     if (nCountLastUsed < pMint.second) {
         CWalletDB walletdb(strWalletFile);
         nCountLastUsed = pMint.second;
-        walletdb.WriteZFROSTCount(nCountLastUsed);
+        walletdb.WriteZMBPOSCount(nCountLastUsed);
     }
 
     //remove from the pool
@@ -350,7 +350,7 @@ bool IsValidCoinValue(const CBigNum& bnValue)
     bnValue.isPrime();
 }
 
-void CzFROSTWallet::SeedToZFROST(const uint512& seedZerocoin, CBigNum& bnValue, CBigNum& bnSerial, CBigNum& bnRandomness, CKey& key)
+void CzMBPOSWallet::SeedToZMBPOS(const uint512& seedZerocoin, CBigNum& bnValue, CBigNum& bnSerial, CBigNum& bnRandomness, CKey& key)
 {
     ZerocoinParams* params = Params().Zerocoin_Params(false);
 
@@ -399,7 +399,7 @@ void CzFROSTWallet::SeedToZFROST(const uint512& seedZerocoin, CBigNum& bnValue, 
     }
 }
 
-uint512 CzFROSTWallet::GetZerocoinSeed(uint32_t n)
+uint512 CzMBPOSWallet::GetZerocoinSeed(uint32_t n)
 {
     CDataStream ss(SER_GETHASH, 0);
     ss << seedMaster << n;
@@ -407,14 +407,14 @@ uint512 CzFROSTWallet::GetZerocoinSeed(uint32_t n)
     return zerocoinSeed;
 }
 
-void CzFROSTWallet::UpdateCount()
+void CzMBPOSWallet::UpdateCount()
 {
     nCountLastUsed++;
     CWalletDB walletdb(strWalletFile);
-    walletdb.WriteZFROSTCount(nCountLastUsed);
+    walletdb.WriteZMBPOSCount(nCountLastUsed);
 }
 
-void CzFROSTWallet::GenerateDeterministicZFROST(CoinDenomination denom, PrivateCoin& coin, CDeterministicMint& dMint, bool fGenerateOnly)
+void CzMBPOSWallet::GenerateDeterministicZMBPOS(CoinDenomination denom, PrivateCoin& coin, CDeterministicMint& dMint, bool fGenerateOnly)
 {
     GenerateMint(nCountLastUsed + 1, denom, coin, dMint);
     if (fGenerateOnly)
@@ -424,14 +424,14 @@ void CzFROSTWallet::GenerateDeterministicZFROST(CoinDenomination denom, PrivateC
     //LogPrintf("%s : Generated new deterministic mint. Count=%d pubcoin=%s seed=%s\n", __func__, nCount, coin.getPublicCoin().getValue().GetHex().substr(0,6), seedZerocoin.GetHex().substr(0, 4));
 }
 
-void CzFROSTWallet::GenerateMint(const uint32_t& nCount, const CoinDenomination denom, PrivateCoin& coin, CDeterministicMint& dMint)
+void CzMBPOSWallet::GenerateMint(const uint32_t& nCount, const CoinDenomination denom, PrivateCoin& coin, CDeterministicMint& dMint)
 {
     uint512 seedZerocoin = GetZerocoinSeed(nCount);
     CBigNum bnValue;
     CBigNum bnSerial;
     CBigNum bnRandomness;
     CKey key;
-    SeedToZFROST(seedZerocoin, bnValue, bnSerial, bnRandomness, key);
+    SeedToZMBPOS(seedZerocoin, bnValue, bnSerial, bnRandomness, key);
     coin = PrivateCoin(Params().Zerocoin_Params(false), denom, bnSerial, bnRandomness);
     coin.setPrivKey(key.GetPrivKey());
     coin.setVersion(PrivateCoin::CURRENT_VERSION);
@@ -445,7 +445,7 @@ void CzFROSTWallet::GenerateMint(const uint32_t& nCount, const CoinDenomination 
     dMint.SetDenomination(denom);
 }
 
-bool CzFROSTWallet::RegenerateMint(const CDeterministicMint& dMint, CZerocoinMint& mint)
+bool CzMBPOSWallet::RegenerateMint(const CDeterministicMint& dMint, CZerocoinMint& mint)
 {
     //Check that the seed is correct    todo:handling of incorrect, or multiple seeds
     uint256 hashSeed = Hash(seedMaster.begin(), seedMaster.end());

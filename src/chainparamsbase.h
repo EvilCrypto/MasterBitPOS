@@ -10,8 +10,8 @@
 #include <vector>
 
 /**
- * CBaseChainParams defines the base parameters (shared between bifrost-cli and bifrostd)
- * of a given instance of the Bifrost system.
+ * CBaseChainParams defines the base parameters (shared between masterbitpos-cli and masterbitposd)
+ * of a given instance of the MasterBitPOS system.
  */
 class CBaseChainParams
 {

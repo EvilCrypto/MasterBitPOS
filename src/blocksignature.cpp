@@ -4,7 +4,7 @@
 
 #include "blocksignature.h"
 #include "main.h"
-#include "zfrostchain.h"
+#include "zmbposchain.h"
 
 bool SignBlockWithKey(CBlock& block, const CKey& key)
 {
@@ -62,13 +62,13 @@ bool CheckBlockSignature(const CBlock& block)
     if (block.vchBlockSig.empty())
         return error("%s: vchBlockSig is empty!", __func__);
 
-    /** Each block is signed by the private key of the input that is staked. This can be either zFROST or normal UTXO
-     *  zFROST: Each zFROST has a keypair associated with it. The serial number is a hash of the public key.
+    /** Each block is signed by the private key of the input that is staked. This can be either zMBPOS or normal UTXO
+     *  zMBPOS: Each zMBPOS has a keypair associated with it. The serial number is a hash of the public key.
      *  UTXO: The public key that signs must match the public key associated with the first utxo of the coinstake tx.
      */
     CPubKey pubkey;
-    bool fzFROSTStake = block.vtx[1].IsZerocoinSpend();
-    if (fzFROSTStake) {
+    bool fzMBPOSStake = block.vtx[1].IsZerocoinSpend();
+    if (fzMBPOSStake) {
         libzerocoin::CoinSpend spend = TxInToZerocoinSpend(block.vtx[1].vin[0]);
         pubkey = spend.getPubKey();
     } else {

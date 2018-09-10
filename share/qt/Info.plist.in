@@ -17,7 +17,7 @@
   <string>APPL</string>
 
   <key>CFBundleGetInfoString</key>
-  <string>@CLIENT_VERSION_MAJOR@.@CLIENT_VERSION_MINOR@.@CLIENT_VERSION_REVISION@, Copyright © 2009-@COPYRIGHT_YEAR@ The Bitcoin Core developers, 2014-@COPYRIGHT_YEAR@ The Dash Core developers, 2015-@COPYRIGHT_YEAR@ The Bifrost Core developers</string>
+  <string>@CLIENT_VERSION_MAJOR@.@CLIENT_VERSION_MINOR@.@CLIENT_VERSION_REVISION@, Copyright © 2009-@COPYRIGHT_YEAR@ The Bitcoin Core developers, 2014-@COPYRIGHT_YEAR@ The Dash Core developers, 2015-@COPYRIGHT_YEAR@ The MasterBitPOS Core developers</string>
 
   <key>CFBundleShortVersionString</key>
   <string>@CLIENT_VERSION_MAJOR@.@CLIENT_VERSION_MINOR@.@CLIENT_VERSION_REVISION@</string>
@@ -29,16 +29,16 @@
   <string>????</string>
 
   <key>CFBundleExecutable</key>
-  <string>Bifrost-Qt</string>
+  <string>MasterBitPOS-Qt</string>
   
   <key>CFBundleName</key>
-  <string>Bifrost-Qt</string>
+  <string>MasterBitPOS-Qt</string>
 
   <key>LSHasLocalizedDisplayName</key>
   <true/>
 
   <key>CFBundleIdentifier</key>
-  <string>io.bifrost.Bifrost-Qt</string>
+  <string>io.masterbitpos.MasterBitPOS-Qt</string>
 
   <key>CFBundleURLTypes</key>
   <array>
@@ -46,10 +46,10 @@
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>CFBundleURLName</key>
-      <string>io.bifrost.BifrostPayment</string>
+      <string>io.masterbitpos.MasterBitPOSPayment</string>
       <key>CFBundleURLSchemes</key>
       <array>
-        <string>bifrost</string>
+        <string>masterbitpos</string>
       </array>
     </dict>
   </array>
@@ -58,9 +58,9 @@
   <array>
     <dict>
       <key>UTTypeIdentifier</key>
-      <string>io.bifrost.paymentrequest</string>
+      <string>io.masterbitpos.paymentrequest</string>
       <key>UTTypeDescription</key>
-      <string>Bifrost payment request</string>
+      <string>MasterBitPOS payment request</string>
       <key>UTTypeConformsTo</key>
       <array>
         <string>public.data</string>
@@ -68,10 +68,10 @@
       <key>UTTypeTagSpecification</key>
       <dict>
         <key>public.mime-type</key>
-        <string>application/x-bifrost-payment-request</string>
+        <string>application/x-masterbitpos-payment-request</string>
         <key>public.filename-extension</key>
         <array>
-          <string>bifrostpaymentrequest</string>
+          <string>masterbitpospaymentrequest</string>
         </array>
       </dict>
     </dict>
@@ -84,7 +84,7 @@
       <string>Editor</string>
       <key>LSItemContentTypes</key>
       <array>
-        <string>io.bifrost.paymentrequest</string>
+        <string>io.masterbitpos.paymentrequest</string>
       </array>
       <key>LSHandlerRank</key>
       <string>Owner</string>

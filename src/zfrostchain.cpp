@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "zfrostchain.h"
+#include "zmbposchain.h"
 #include "invalid.h"
 #include "main.h"
 #include "txdb.h"

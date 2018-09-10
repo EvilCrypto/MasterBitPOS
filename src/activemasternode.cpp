@@ -12,7 +12,7 @@
 #include "spork.h"
 
 //
-// Bootup the Masternode, look for a 10000 FROST input and register on the network
+// Bootup the Masternode, look for a 10000 MBPOS input and register on the network
 //
 void CActiveMasternode::ManageStatus()
 {

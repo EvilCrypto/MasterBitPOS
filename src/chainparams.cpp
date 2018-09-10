@@ -126,21 +126,21 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 4-byte int at any alignment.
          */
-        pchMessageStart[0] = 0xc5;
-        pchMessageStart[1] = 0xa2;
-        pchMessageStart[2] = 0xe1;
-        pchMessageStart[3] = 0xd6;
+        pchMessageStart[0] = 0xb4;
+        pchMessageStart[1] = 0xa5;
+        pchMessageStart[2] = 0xd2;
+        pchMessageStart[3] = 0xc5;
         vAlertPubKey = ParseHex("045842c614ccb80d184542d6b45a6851f58de36fc898d6a38f32b4b7af28a67e16f2b809c1425c6d95eb8b39aa3e79729bfe59f6854450229ea6572045455962b7");
-        nDefaultPort = 9229;
-        bnProofOfWorkLimit = ~uint256(0) >> 20; // Bifrost starting difficulty is 1 / 2^12
+        nDefaultPort = 89229;
+        bnProofOfWorkLimit = ~uint256(0) >> 20; // MasterBitPOS starting difficulty is 1 / 2^12
         nSubsidyHalvingInterval = 210000;
         nMaxReorganizationDepth = 100;
         nEnforceBlockUpgradeMajority = 750;
         nRejectBlockOutdatedMajority = 950;
         nToCheckBlockUpgradeMajority = 1000;
         nMinerThreads = 0;
-        nTargetTimespan = 1 * 60; // Bifrost: 1 day
-        nTargetSpacing = 1 * 30;  // Bifrost: 1 minute
+        nTargetTimespan = 1 * 60; // MasterBitPOS: 1 day
+        nTargetSpacing = 1 * 30;  // MasterBitPOS: 1 minute
         nMaturity = 60;
         nMasternodeCountDrift = 20;
         nMaxMoneyOut = 21000000 * COIN;
@@ -175,7 +175,7 @@ public:
          *     CTxOut(nValue=50.00000000, scriptPubKey=0xA9037BAC7050C479B121CF)
          *   vMerkleTree: e0028e
          */
-        const char* pszTimestamp = "Historic Las Vegas Neon Signs Are Shining Again";
+        const char* pszTimestamp = "Something very clever is written here on Monday, September 10, 2018 12:00:00 PM GMT+03:00";
         CMutableTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
@@ -186,7 +186,7 @@ public:
         genesis.hashPrevBlock = 0;
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion = 1;
-        genesis.nTime = 1523854631;
+        genesis.nTime = 1536570000;
         genesis.nBits = bnProofOfWorkLimit.GetCompact();
         genesis.nNonce = 7065194;
 
@@ -194,7 +194,7 @@ public:
         assert(hashGenesisBlock == uint256("0x000006e6fa091a20a38fe6f0212d03e5df72b44d76e2eb4246b4d366dbb01faf"));
         assert(genesis.hashMerkleRoot == uint256("0xa6754bc40268cb44d68aa72471945408b68ade886e6b8c5fd18c933d441c087d"));
 
-        vSeeds.push_back(CDNSSeedData("0",  "dnsseed.bifrostcoin.io"));
+        vSeeds.push_back(CDNSSeedData("0",  "dnsseed.masterbitposcoin.io"));
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 25);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 85);
@@ -234,7 +234,7 @@ public:
         nRequiredAccumulation = 1;
         nDefaultSecurityLevel = 100; //full security level for accumulators
         nZerocoinHeaderVersion = 4; //Block headers must be this version once zerocoin is active
-        nZerocoinRequiredStakeDepth = 200; //The required confirmations for a zfrost to be stakable
+        nZerocoinRequiredStakeDepth = 200; //The required confirmations for a zmbpos to be stakable
 
         nBudget_Fee_Confirmations = 6; // Number of confirmations for the finalization fee
     }
@@ -256,18 +256,18 @@ public:
     {
         networkID = CBaseChainParams::TESTNET;
         strNetworkID = "test";
-        pchMessageStart[0] = 0x53;
-        pchMessageStart[1] = 0x64;
-        pchMessageStart[2] = 0x75;
-        pchMessageStart[3] = 0x86;
+        pchMessageStart[0] = 0x51;
+        pchMessageStart[1] = 0x63;
+        pchMessageStart[2] = 0x72;
+        pchMessageStart[3] = 0x81;
         vAlertPubKey = ParseHex("04207f3e4229bdd4f408e77918571292e149c52b3ff92ef0ec55c5c4e34ae633c331e24e6e70173b03c18549284e29eea43f74d5b32eba631a5d0c277486103c66");
         nDefaultPort = 19229;
         nEnforceBlockUpgradeMajority = 51;
         nRejectBlockOutdatedMajority = 75;
         nToCheckBlockUpgradeMajority = 100;
         nMinerThreads = 0;
-        nTargetTimespan = 1 * 60; // Bifrost: 1 day
-        nTargetSpacing = 1 * 60;  // Bifrost: 1 minute
+        nTargetTimespan = 1 * 60; // MasterBitPOS: 1 day
+        nTargetSpacing = 1 * 60;  // MasterBitPOS: 1 minute
         nLastPOWBlock = 200;
         nMaturity = 60;
         nMasternodeCountDrift = 4;
@@ -295,14 +295,14 @@ public:
         vFixedSeeds.clear();
         vSeeds.clear();
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 112); // Testnet bifrost addresses start with 'x' or 'y'
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 29);  // Testnet bifrost script addresses start with '8' or '9'
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 112); // Testnet masterbitpos addresses start with 'x' or 'y'
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 29);  // Testnet masterbitpos script addresses start with '8' or '9'
         base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 240);     // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
-        // Testnet bifrost BIP32 pubkeys start with 'DRKV'
+        // Testnet masterbitpos BIP32 pubkeys start with 'DRKV'
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x3a)(0x80)(0x61)(0xa0).convert_to_container<std::vector<unsigned char> >();
-        // Testnet bifrost BIP32 prvkeys start with 'DRKP'
+        // Testnet masterbitpos BIP32 prvkeys start with 'DRKP'
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x3a)(0x80)(0x58)(0x37).convert_to_container<std::vector<unsigned char> >();
-        // Testnet bifrost BIP44 coin type is '1' (All coin's testnet default)
+        // Testnet masterbitpos BIP44 coin type is '1' (All coin's testnet default)
         base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x00)(0x01).convert_to_container<std::vector<unsigned char> >();
 
         convertSeed6(vFixedSeeds, pnSeed6_test, ARRAYLEN(pnSeed6_test));
@@ -340,17 +340,17 @@ public:
         networkID = CBaseChainParams::REGTEST;
         strNetworkID = "regtest";
         strNetworkID = "regtest";
-        pchMessageStart[0] = 0x14;
-        pchMessageStart[1] = 0x54;
-        pchMessageStart[2] = 0x95;
-        pchMessageStart[3] = 0x64;
+        pchMessageStart[0] = 0x16;
+        pchMessageStart[1] = 0x57;
+        pchMessageStart[2] = 0x93;
+        pchMessageStart[3] = 0x61;
         nSubsidyHalvingInterval = 150;
         nEnforceBlockUpgradeMajority = 750;
         nRejectBlockOutdatedMajority = 950;
         nToCheckBlockUpgradeMajority = 1000;
         nMinerThreads = 1;
-        nTargetTimespan = 24 * 60 * 60; // Bifrost: 1 day
-        nTargetSpacing = 1 * 60;        // Bifrost: 1 minutes
+        nTargetTimespan = 24 * 60 * 60; // MasterBitPOS: 1 day
+        nTargetSpacing = 1 * 60;        // MasterBitPOS: 1 minutes
         bnProofOfWorkLimit = ~uint256(0) >> 1;
         genesis.nTime = 1523854631;
         genesis.nBits = bnProofOfWorkLimit.GetCompact();

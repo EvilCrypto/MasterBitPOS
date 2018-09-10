@@ -80,15 +80,15 @@ noinst_PROGRAMS =
 TESTS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += bifrostd
+  bin_PROGRAMS += masterbitposd
 endif
 
 if BUILD_BITCOIN_UTILS
-  bin_PROGRAMS += bifrost-cli bifrost-tx
+  bin_PROGRAMS += masterbitpos-cli masterbitpos-tx
 endif
 
 .PHONY: FORCE
-# bifrost core #
+# masterbitpos core #
 BITCOIN_CORE_H = \
   activemasternode.h \
   accumulators.h \
@@ -192,9 +192,9 @@ BITCOIN_CORE_H = \
   wallet.h \
   wallet_ismine.h \
   walletdb.h \
-  zfrostchain.h \
-  zfrosttracker.h \
-  zfrostwallet.h \
+  zmbposchain.h \
+  zmbpostracker.h \
+  zmbposwallet.h \
   zmq/zmqabstractnotifier.h \
   zmq/zmqconfig.h \
   zmq/zmqnotificationinterface.h \
@@ -207,7 +207,7 @@ obj/build.h: FORCE
 	  "$(abs_top_srcdir)"
 libbitcoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
-# server: shared between bifrostd and bifrost-qt
+# server: shared between masterbitposd and masterbitpos-qt
 libbitcoin_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
 libbitcoin_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_server_a_SOURCES = \
@@ -243,7 +243,7 @@ libbitcoin_server_a_SOURCES = \
   txdb.cpp \
   txmempool.cpp \
   validationinterface.cpp \
-  zfrostchain.cpp \
+  zmbposchain.cpp \
   coinvalidator.cpp \
   $(BITCOIN_CORE_H)
 
@@ -256,7 +256,7 @@ libbitcoin_zmq_a_SOURCES = \
   zmq/zmqpublishnotifier.cpp
 endif
 
-# wallet: shared between bifrostd and bifrost-qt, but only linked
+# wallet: shared between masterbitposd and masterbitpos-qt, but only linked
 # when wallet enabled
 libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
@@ -284,8 +284,8 @@ libbitcoin_wallet_a_SOURCES = \
   wallet.cpp \
   wallet_ismine.cpp \
   walletdb.cpp \
-  zfrostwallet.cpp \
-  zfrosttracker.cpp \
+  zmbposwallet.cpp \
+  zmbpostracker.cpp \
   stakeinput.cpp \
   $(BITCOIN_CORE_H)
 
@@ -361,7 +361,7 @@ libzerocoin_libbitcoin_zerocoin_a_SOURCES = \
   libzerocoin/Params.cpp \
   libzerocoin/SerialNumberSignatureOfKnowledge.cpp
 
-# common: shared between bifrostd, and bifrost-qt and non-server tools
+# common: shared between masterbitposd, and masterbitpos-qt and non-server tools
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
@@ -424,7 +424,7 @@ if GLIBC_BACK_COMPAT
 libbitcoin_util_a_SOURCES += compat/glibc_compat.cpp
 endif
 
-# cli: shared between bifrost-cli and bifrost-qt
+# cli: shared between masterbitpos-cli and masterbitpos-qt
 libbitcoin_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_cli_a_SOURCES = \
@@ -434,16 +434,16 @@ libbitcoin_cli_a_SOURCES = \
 nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
-# bifrostd binary #
-bifrostd_SOURCES = bifrostd.cpp
-bifrostd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-bifrostd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bifrostd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# masterbitposd binary #
+masterbitposd_SOURCES = masterbitposd.cpp
+masterbitposd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+masterbitposd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+masterbitposd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-bifrostd_SOURCES += bifrostd-res.rc
+masterbitposd_SOURCES += masterbitposd-res.rc
 endif
-bifrostd_LDADD = \
+masterbitposd_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_COMMON) \
   $(LIBUNIVALUE) \
@@ -456,38 +456,38 @@ bifrostd_LDADD = \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-bifrostd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
+masterbitposd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
 
-# bifrost-cli binary #
-bifrost_cli_SOURCES = bifrost-cli.cpp
-bifrost_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-bifrost_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bifrost_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# masterbitpos-cli binary #
+masterbitpos_cli_SOURCES = masterbitpos-cli.cpp
+masterbitpos_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+masterbitpos_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+masterbitpos_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-bifrost_cli_SOURCES += bifrost-cli-res.rc
+masterbitpos_cli_SOURCES += masterbitpos-cli-res.rc
 endif
 
-bifrost_cli_LDADD = \
+masterbitpos_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CRYPTO)
 
-bifrost_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
+masterbitpos_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
-# bifrost-tx binary #
-bifrost_tx_SOURCES = bifrost-tx.cpp
-bifrost_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-bifrost_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bifrost_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# masterbitpos-tx binary #
+masterbitpos_tx_SOURCES = masterbitpos-tx.cpp
+masterbitpos_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+masterbitpos_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+masterbitpos_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-bifrost_tx_SOURCES += bifrost-tx-res.rc
+masterbitpos_tx_SOURCES += masterbitpos-tx-res.rc
 endif
 
-bifrost_tx_LDADD = \
+masterbitpos_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_ZEROCOIN) \
@@ -495,7 +495,7 @@ bifrost_tx_LDADD = \
   $(LIBBITCOIN_CRYPTO) \
   $(LIBSECP256K1)
 
-bifrost_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
+masterbitpos_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
 
 # bitcoinconsensus library #

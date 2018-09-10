@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BIFROST_UINT512_H
-#define BIFROST_UINT512_H
+#ifndef BIMBPOS_UINT512_H
+#define BIMBPOS_UINT512_H
 
 #include "arith_uint256.h"
 #include "uint256.h"
@@ -42,4 +42,4 @@ inline uint512 uint512S(const char* str)
     return rv;
 }
 
-#endif // BIFROST_UINT512_H
+#endif // BIMBPOS_UINT512_H

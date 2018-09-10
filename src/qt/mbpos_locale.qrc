@@ -1,0 +1,36 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/translations">
+        <file alias="bg">locale/masterbitpos_bg.qm</file>
+        <file alias="ca">locale/masterbitpos_ca.qm</file>
+        <file alias="cs">locale/masterbitpos_cs.qm</file>
+        <file alias="da">locale/masterbitpos_da.qm</file>
+        <file alias="de">locale/masterbitpos_de.qm</file>
+        <file alias="en">locale/masterbitpos_en.qm</file>
+        <file alias="en_US">locale/masterbitpos_en_US.qm</file>
+        <file alias="eo">locale/masterbitpos_eo.qm</file>
+        <file alias="es">locale/masterbitpos_es.qm</file>
+        <file alias="es_ES">locale/masterbitpos_es_ES.qm</file>
+        <file alias="fi">locale/masterbitpos_fi.qm</file>
+        <file alias="fr_FR">locale/masterbitpos_fr_FR.qm</file>
+        <file alias="hi_IN">locale/masterbitpos_hi_IN.qm</file>
+        <file alias="hr">locale/masterbitpos_hr.qm</file>
+        <file alias="hr_HR">locale/masterbitpos_hr_HR.qm</file>
+        <file alias="it">locale/masterbitpos_it.qm</file>
+        <file alias="ja">locale/masterbitpos_ja.qm</file>
+        <file alias="ko_KR">locale/masterbitpos_ko_KR.qm</file>
+        <file alias="lt_LT">locale/masterbitpos_lt_LT.qm</file>
+        <file alias="nl">locale/masterbitpos_nl.qm</file>
+        <file alias="pl">locale/masterbitpos_pl.qm</file>
+        <file alias="pt">locale/masterbitpos_pt.qm</file>
+        <file alias="pt_BR">locale/masterbitpos_pt_BR.qm</file>
+        <file alias="ro_RO">locale/masterbitpos_ro_RO.qm</file>
+        <file alias="ru">locale/masterbitpos_ru.qm</file>
+        <file alias="sk">locale/masterbitpos_sk.qm</file>
+        <file alias="sv">locale/masterbitpos_sv.qm</file>
+        <file alias="tr">locale/masterbitpos_tr.qm</file>
+        <file alias="uk">locale/masterbitpos_uk.qm</file>
+        <file alias="vi">locale/masterbitpos_vi.qm</file>
+        <file alias="zh_CN">locale/masterbitpos_zh_CN.qm</file>
+        <file alias="zh_TW">locale/masterbitpos_zh_TW.qm</file>
+    </qresource>
+</RCC>

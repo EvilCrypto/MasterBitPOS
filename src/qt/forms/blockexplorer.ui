@@ -168,7 +168,7 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="../bifrost.qrc"/>
+  <include location="../masterbitpos.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -26,7 +26,7 @@ CSporkManager sporkManager;
 std::map<uint256, CSporkMessage> mapSporks;
 std::map<int, CSporkMessage> mapSporksActive;
 
-// Bifrost: on startup load spork values from previous session if they exist in the sporkDB
+// MasterBitPOS: on startup load spork values from previous session if they exist in the sporkDB
 void LoadSporksFromDB()
 {
     for (int i = SPORK_START; i <= SPORK_END; ++i) {
@@ -103,7 +103,7 @@ void ProcessSpork(CNode* pfrom, std::string& strCommand, CDataStream& vRecv)
         mapSporksActive[spork.nSporkID] = spork;
         sporkManager.Relay(spork);
 
-        // Bifrost: add to spork database.
+        // MasterBitPOS: add to spork database.
         pSporkDB->WriteSpork(spork.nSporkID, spork);
 
         //does a task if needed

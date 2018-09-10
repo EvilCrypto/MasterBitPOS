@@ -2,15 +2,15 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BIFROST_ZFROSTTRACKER_H
-#define BIFROST_ZFROSTTRACKER_H
+#ifndef BIMBPOS_ZMBPOSTRACKER_H
+#define BIMBPOS_ZMBPOSTRACKER_H
 
 #include "primitives/zerocoin.h"
 #include <list>
 
 class CDeterministicMint;
 
-class CzFROSTTracker
+class CzMBPOSTracker
 {
 private:
     bool fInitialized;
@@ -19,8 +19,8 @@ private:
     std::map<uint256, uint256> mapPendingSpends; //serialhash, txid of spend
     bool UpdateStatusInternal(const std::set<uint256>& setMempool, CMintMeta& mint);
 public:
-    CzFROSTTracker(std::string strWalletFile);
-    ~CzFROSTTracker();
+    CzMBPOSTracker(std::string strWalletFile);
+    ~CzMBPOSTracker();
     void Add(const CDeterministicMint& dMint, bool isNew = false, bool isArchived = false);
     void Add(const CZerocoinMint& mint, bool isNew = false, bool isArchived = false);
     bool Archive(CMintMeta& meta);
@@ -48,4 +48,4 @@ public:
     void Clear();
 };
 
-#endif //BIFROST_ZFROSTTRACKER_H
+#endif //BIMBPOS_ZMBPOSTRACKER_H

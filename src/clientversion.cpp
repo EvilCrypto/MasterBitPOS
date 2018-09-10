@@ -11,10 +11,10 @@
 
 /**
  * Name of client reported in the 'version' message. Report the same name
- * for both bifrostd and bifrost-qt, to make it harder for attackers to
+ * for both masterbitposd and masterbitpos-qt, to make it harder for attackers to
  * target servers or GUI users specifically.
  */
-const std::string CLIENT_NAME("Bifrost Core");
+const std::string CLIENT_NAME("MasterBitPOS Core");
 
 /**
  * Client version number

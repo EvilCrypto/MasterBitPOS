@@ -48,7 +48,7 @@ static std::string ValueToString(CAmount nValue, bool AllowNegative = false)
     if (nValue < 0 && !AllowNegative)
         return "<span>" + _("unknown") + "</span>";
 
-    QString Str = BitcoinUnits::formatWithUnit(BitcoinUnits::FROST, nValue);
+    QString Str = BitcoinUnits::formatWithUnit(BitcoinUnits::MBPOS, nValue);
     if (AllowNegative && nValue > 0)
         Str = '+' + Str;
     return std::string("<span>") + Str.toUtf8().data() + "</span>";
@@ -477,8 +477,8 @@ void BlockExplorer::showEvent(QShowEvent*)
         updateNavButtons();
 
         if (!GetBoolArg("-txindex", true)) {
-            QString Warning = tr("Not all transactions will be shown. To view all transactions you need to set txindex=1 in the configuration file (bifrost.conf).");
-            QMessageBox::warning(this, "Bifrost Core Blockchain Explorer", Warning, QMessageBox::Ok);
+            QString Warning = tr("Not all transactions will be shown. To view all transactions you need to set txindex=1 in the configuration file (masterbitpos.conf).");
+            QMessageBox::warning(this, "MasterBitPOS Core Blockchain Explorer", Warning, QMessageBox::Ok);
         }
     }
 }

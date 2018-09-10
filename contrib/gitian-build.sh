@@ -17,7 +17,7 @@ osx=true
 SIGNER=
 VERSION=
 commit=false
-url=https://github.com/bifrost-actual/bifrost-coin
+url=https://github.com/EvilCrypto/MasterBitPOS
 proc=2
 mem=2000
 lxc=true
@@ -31,7 +31,7 @@ commitFiles=true
 read -d '' usage <<- EOF
 Usage: $scriptName [-c|u|v|b|s|B|o|h|j|m|] signer version
 
-Run this script from the directory containing the bifrost, gitian-builder, gitian.sigs, and bifrost-detached-sigs.
+Run this script from the directory containing the masterbitpos, gitian-builder, gitian.sigs, and masterbitpos-detached-sigs.
 
 Arguments:
 signer          GPG signer to sign each build assert file
@@ -39,7 +39,7 @@ version		Version number, commit, or branch to build. If building a commit or bra
 
 Options:
 -c|--commit	Indicate that the version argument is for a commit or branch
--u|--url	Specify the URL of the repository. Default is https://github.com/bifrost-actual/bifrost-coin
+-u|--url	Specify the URL of the repository. Default is https://github.com/EvilCrypto/MasterBitPOS
 -v|--verify 	Verify the gitian build
 -b|--build	Do a gitian build
 -s|--sign	Make signed binaries for Windows and Mac OSX
@@ -237,8 +237,8 @@ echo ${COMMIT}
 if [[ $setup = true ]]
 then
     sudo apt-get install ruby apache2 git apt-cacher-ng python-vm-builder qemu-kvm qemu-utils
-    git clone https://github.com/bifrost-actual/gitian.sigs.git
-    git clone https://github.com/bifrost-actual/bifrost-detached-sigs.git
+    git clone https://github.com/EvilCrypto/gitian.sigs.git
+    git clone https://github.com/EvilCrypto/mbpos-detached-sigs.git
     git clone https://github.com/devrandom/gitian-builder.git
     pushd ./gitian-builder
     if [[ -n "$USE_LXC" ]]
@@ -252,7 +252,7 @@ then
 fi
 
 # Set up build
-pushd ./bifrost
+pushd ./masterbitpos
 git fetch
 git checkout ${COMMIT}
 popd
@@ -261,7 +261,7 @@ popd
 if [[ $build = true ]]
 then
 	# Make output folder
-	mkdir -p ./bifrost-binaries/${VERSION}
+	mkdir -p ./masterbitpos-binaries/${VERSION}
 
 	# Build Dependencies
 	echo ""
@@ -271,7 +271,7 @@ then
 	mkdir -p inputs
 	wget -N -P inputs $osslPatchUrl
 	wget -N -P inputs $osslTarUrl
-	make -C ../bifrost/depends download SOURCES_PATH=`pwd`/cache/common
+	make -C ../masterbitpos/depends download SOURCES_PATH=`pwd`/cache/common
 
 	# Linux
 	if [[ $linux = true ]]
@@ -279,9 +279,9 @@ then
             echo ""
 	    echo "Compiling ${VERSION} Linux"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit bifrost=${COMMIT} --url bifrost=${url} ../bifrost/contrib/gitian-descriptors/gitian-linux.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../bifrost/contrib/gitian-descriptors/gitian-linux.yml
-	    mv build/out/bifrost-*.tar.gz build/out/src/bifrost-*.tar.gz ../bifrost-binaries/${VERSION}
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit masterbitpos=${COMMIT} --url masterbitpos=${url} ../masterbitpos/contrib/gitian-descriptors/gitian-linux.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../masterbitpos/contrib/gitian-descriptors/gitian-linux.yml
+	    mv build/out/masterbitpos-*.tar.gz build/out/src/masterbitpos-*.tar.gz ../masterbitpos-binaries/${VERSION}
 	fi
 	# Windows
 	if [[ $windows = true ]]
@@ -289,10 +289,10 @@ then
 	    echo ""
 	    echo "Compiling ${VERSION} Windows"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit bifrost=${COMMIT} --url bifrost=${url} ../bifrost/contrib/gitian-descriptors/gitian-win.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../bifrost/contrib/gitian-descriptors/gitian-win.yml
-	    mv build/out/bifrost-*-win-unsigned.tar.gz inputs/bifrost-win-unsigned.tar.gz
-	    mv build/out/bifrost-*.zip build/out/bifrost-*.exe ../bifrost-binaries/${VERSION}
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit masterbitpos=${COMMIT} --url masterbitpos=${url} ../masterbitpos/contrib/gitian-descriptors/gitian-win.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../masterbitpos/contrib/gitian-descriptors/gitian-win.yml
+	    mv build/out/masterbitpos-*-win-unsigned.tar.gz inputs/masterbitpos-win-unsigned.tar.gz
+	    mv build/out/masterbitpos-*.zip build/out/masterbitpos-*.exe ../masterbitpos-binaries/${VERSION}
 	fi
 	# Mac OSX
 	if [[ $osx = true ]]
@@ -300,10 +300,10 @@ then
 	    echo ""
 	    echo "Compiling ${VERSION} Mac OSX"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit bifrost=${COMMIT} --url bifrost=${url} ../bifrost/contrib/gitian-descriptors/gitian-osx.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../bifrost/contrib/gitian-descriptors/gitian-osx.yml
-	    mv build/out/bifrost-*-osx-unsigned.tar.gz inputs/bifrost-osx-unsigned.tar.gz
-	    mv build/out/bifrost-*.tar.gz build/out/bifrost-*.dmg ../bifrost-binaries/${VERSION}
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit masterbitpos=${COMMIT} --url masterbitpos=${url} ../masterbitpos/contrib/gitian-descriptors/gitian-osx.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../masterbitpos/contrib/gitian-descriptors/gitian-osx.yml
+	    mv build/out/masterbitpos-*-osx-unsigned.tar.gz inputs/masterbitpos-osx-unsigned.tar.gz
+	    mv build/out/masterbitpos-*.tar.gz build/out/masterbitpos-*.dmg ../masterbitpos-binaries/${VERSION}
 	fi
 	# AArch64
 	if [[ $aarch64 = true ]]
@@ -311,9 +311,9 @@ then
 	    echo ""
 	    echo "Compiling ${VERSION} AArch64"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit bifrost=${COMMIT} --url bifrost=${url} ../bifrost/contrib/gitian-descriptors/gitian-aarch64.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-aarch64 --destination ../gitian.sigs/ ../bifrost/contrib/gitian-descriptors/gitian-aarch64.yml
-	    mv build/out/bifrost-*.tar.gz build/out/src/bifrost-*.tar.gz ../bifrost-binaries/${VERSION}
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit masterbitpos=${COMMIT} --url masterbitpos=${url} ../masterbitpos/contrib/gitian-descriptors/gitian-aarch64.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-aarch64 --destination ../gitian.sigs/ ../masterbitpos/contrib/gitian-descriptors/gitian-aarch64.yml
+	    mv build/out/masterbitpos-*.tar.gz build/out/src/masterbitpos-*.tar.gz ../masterbitpos-binaries/${VERSION}
 	fi
 
     popd
@@ -341,32 +341,32 @@ then
 	echo ""
 	echo "Verifying v${VERSION} Linux"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../bifrost/contrib/gitian-descriptors/gitian-linux.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../masterbitpos/contrib/gitian-descriptors/gitian-linux.yml
 	# Windows
 	echo ""
 	echo "Verifying v${VERSION} Windows"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../bifrost/contrib/gitian-descriptors/gitian-win.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../masterbitpos/contrib/gitian-descriptors/gitian-win.yml
 	# Mac OSX
 	echo ""
 	echo "Verifying v${VERSION} Mac OSX"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../bifrost/contrib/gitian-descriptors/gitian-osx.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../masterbitpos/contrib/gitian-descriptors/gitian-osx.yml
 	# AArch64
 	echo ""
 	echo "Verifying v${VERSION} AArch64"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-aarch64 ../bifrost/contrib/gitian-descriptors/gitian-aarch64.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-aarch64 ../masterbitpos/contrib/gitian-descriptors/gitian-aarch64.yml
 	# Signed Windows
 	echo ""
 	echo "Verifying v${VERSION} Signed Windows"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../bifrost/contrib/gitian-descriptors/gitian-osx-signer.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../masterbitpos/contrib/gitian-descriptors/gitian-osx-signer.yml
 	# Signed Mac OSX
 	echo ""
 	echo "Verifying v${VERSION} Signed Mac OSX"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../bifrost/contrib/gitian-descriptors/gitian-osx-signer.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../masterbitpos/contrib/gitian-descriptors/gitian-osx-signer.yml
 	popd
 fi
 
@@ -381,10 +381,10 @@ then
 	    echo ""
 	    echo "Signing ${VERSION} Windows"
 	    echo ""
-	    ./bin/gbuild -i --commit signature=${COMMIT} ../bifrost/contrib/gitian-descriptors/gitian-win-signer.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../bifrost/contrib/gitian-descriptors/gitian-win-signer.yml
-	    mv build/out/bifrost-*win64-setup.exe ../bifrost-binaries/${VERSION}
-	    mv build/out/bifrost-*win32-setup.exe ../bifrost-binaries/${VERSION}
+	    ./bin/gbuild -i --commit signature=${COMMIT} ../masterbitpos/contrib/gitian-descriptors/gitian-win-signer.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../masterbitpos/contrib/gitian-descriptors/gitian-win-signer.yml
+	    mv build/out/masterbitpos-*win64-setup.exe ../masterbitpos-binaries/${VERSION}
+	    mv build/out/masterbitpos-*win32-setup.exe ../masterbitpos-binaries/${VERSION}
 	fi
 	# Sign Mac OSX
 	if [[ $osx = true ]]
@@ -392,9 +392,9 @@ then
 	    echo ""
 	    echo "Signing ${VERSION} Mac OSX"
 	    echo ""
-	    ./bin/gbuild -i --commit signature=${COMMIT} ../bifrost/contrib/gitian-descriptors/gitian-osx-signer.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../bifrost/contrib/gitian-descriptors/gitian-osx-signer.yml
-	    mv build/out/bifrost-osx-signed.dmg ../bifrost-binaries/${VERSION}/bifrost-${VERSION}-osx.dmg
+	    ./bin/gbuild -i --commit signature=${COMMIT} ../masterbitpos/contrib/gitian-descriptors/gitian-osx-signer.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../masterbitpos/contrib/gitian-descriptors/gitian-osx-signer.yml
+	    mv build/out/masterbitpos-osx-signed.dmg ../masterbitpos-binaries/${VERSION}/masterbitpos-${VERSION}-osx.dmg
 	fi
 	popd
 

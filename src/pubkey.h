@@ -4,8 +4,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BIFROST_PUBKEY_H
-#define BIFROST_PUBKEY_H
+#ifndef BIMBPOS_PUBKEY_H
+#define BIMBPOS_PUBKEY_H
 
 #include "hash.h"
 #include "serialize.h"
@@ -268,4 +268,4 @@ public:
     ~ECCVerifyHandle();
 };
 
-#endif // BIFROST_PUBKEY_H
+#endif // BIMBPOS_PUBKEY_H

@@ -126,7 +126,7 @@ public:
 };
 
 /**
- * Bifrost RPC command dispatcher.
+ * MasterBitPOS RPC command dispatcher.
  */
 class CRPCTable
 {
@@ -258,11 +258,11 @@ extern UniValue importzerocoins(const UniValue& params, bool fHelp);
 extern UniValue exportzerocoins(const UniValue& params, bool fHelp);
 extern UniValue reconsiderzerocoins(const UniValue& params, bool fHelp);
 extern UniValue getspentzerocoinamount(const UniValue& params, bool fHelp);
-extern UniValue setzfrostseed(const UniValue& params, bool fHelp);
-extern UniValue getzfrostseed(const UniValue& params, bool fHelp);
+extern UniValue setzmbposseed(const UniValue& params, bool fHelp);
+extern UniValue getzmbposseed(const UniValue& params, bool fHelp);
 extern UniValue generatemintlist(const UniValue& params, bool fHelp);
-extern UniValue searchdzfrost(const UniValue& params, bool fHelp);
-extern UniValue dzfroststate(const UniValue& params, bool fHelp);
+extern UniValue searchdzmbpos(const UniValue& params, bool fHelp);
+extern UniValue dzmbposstate(const UniValue& params, bool fHelp);
 
 extern UniValue getrawtransaction(const UniValue& params, bool fHelp); // in rcprawtransaction.cpp
 extern UniValue listunspent(const UniValue& params, bool fHelp);

@@ -14,7 +14,7 @@
 #include "primitives/zerocoin.h"
 #include "libzerocoin/Accumulator.h"
 #include "libzerocoin/Denominations.h"
-#include "zfrosttracker.h"
+#include "zmbpostracker.h"
 
 #include <list>
 #include <stdint.h>
@@ -175,14 +175,14 @@ public:
     bool ReadZerocoinSpendSerialEntry(const CBigNum& bnSerial);
     bool WriteCurrentSeedHash(const uint256& hashSeed);
     bool ReadCurrentSeedHash(uint256& hashSeed);
-    bool WriteZFROSTSeed(const uint256& hashSeed, const vector<unsigned char>& seed);
-    bool ReadZFROSTSeed(const uint256& hashSeed, vector<unsigned char>& seed);
-    bool ReadZFROSTSeed_deprecated(uint256& seed);
-    bool EraseZFROSTSeed();
-    bool EraseZFROSTSeed_deprecated();
+    bool WriteZMBPOSSeed(const uint256& hashSeed, const vector<unsigned char>& seed);
+    bool ReadZMBPOSSeed(const uint256& hashSeed, vector<unsigned char>& seed);
+    bool ReadZMBPOSSeed_deprecated(uint256& seed);
+    bool EraseZMBPOSSeed();
+    bool EraseZMBPOSSeed_deprecated();
 
-    bool WriteZFROSTCount(const uint32_t& nCount);
-    bool ReadZFROSTCount(uint32_t& nCount);
+    bool WriteZMBPOSCount(const uint32_t& nCount);
+    bool ReadZMBPOSCount(uint32_t& nCount);
     std::map<uint256, std::vector<pair<uint256, uint32_t> > > MapMintPool();
     bool WriteMintPoolPair(const uint256& hashMasterSeed, const uint256& hashPubcoin, const uint32_t& nCount);
 

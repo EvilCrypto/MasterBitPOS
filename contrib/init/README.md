@@ -1,10 +1,10 @@
 Sample configuration files for:
 
-SystemD: bifrostd.service
-Upstart: bifrostd.conf
-OpenRC:  bifrostd.openrc
-         bifrostd.openrcconf
-CentOS:  bifrostd.init
+SystemD: masterbitposd.service
+Upstart: masterbitposd.conf
+OpenRC:  masterbitposd.openrc
+         masterbitposd.openrcconf
+CentOS:  masterbitposd.init
 
 have been made available to assist packagers in creating node packages here.
 

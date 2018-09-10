@@ -347,7 +347,7 @@ void AddressTableModel::updateEntry(const QString& address,
     const QString& purpose,
     int status)
 {
-    // Update address book model from Bifrost core
+    // Update address book model from MasterBitPOS core
     priv->updateEntry(address, label, isMine, purpose, status);
 }
 

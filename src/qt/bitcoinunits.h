@@ -43,7 +43,7 @@
 #define THIN_SP_UTF8 REAL_THIN_SP_UTF8
 #define THIN_SP_HTML HTML_HACK_SP
 
-/** Bifrost unit definitions. Encapsulates parsing and formatting
+/** MasterBitPOS unit definitions. Encapsulates parsing and formatting
    and serves as list model for drop-down selection boxes.
 */
 class BitcoinUnits : public QAbstractListModel
@@ -53,13 +53,13 @@ class BitcoinUnits : public QAbstractListModel
 public:
     explicit BitcoinUnits(QObject* parent);
 
-    /** Bifrost units.
+    /** MasterBitPOS units.
       @note Source: https://en.bitcoin.it/wiki/Units . Please add only sensible ones
      */
     enum Unit {
-        FROST,
-        mFROST,
-        uFROST
+        MBPOS,
+        mMBPOS,
+        uMBPOS
     };
 
     enum SeparatorStyle {

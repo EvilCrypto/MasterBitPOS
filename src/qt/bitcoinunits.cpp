@@ -19,18 +19,18 @@ BitcoinUnits::BitcoinUnits(QObject* parent) : QAbstractListModel(parent),
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(FROST);
-    unitlist.append(mFROST);
-    unitlist.append(uFROST);
+    unitlist.append(MBPOS);
+    unitlist.append(mMBPOS);
+    unitlist.append(uMBPOS);
     return unitlist;
 }
 
 bool BitcoinUnits::valid(int unit)
 {
     switch (unit) {
-    case FROST:
-    case mFROST:
-    case uFROST:
+    case MBPOS:
+    case mMBPOS:
+    case uMBPOS:
         return true;
     default:
         return false;
@@ -40,12 +40,12 @@ bool BitcoinUnits::valid(int unit)
 QString BitcoinUnits::id(int unit)
 {
     switch (unit) {
-    case FROST:
-        return QString("bifrost");
-    case mFROST:
-        return QString("mbifrost");
-    case uFROST:
-        return QString::fromUtf8("ubifrost");
+    case MBPOS:
+        return QString("masterbitpos");
+    case mMBPOS:
+        return QString("mmasterbitpos");
+    case uMBPOS:
+        return QString::fromUtf8("umasterbitpos");
     default:
         return QString("???");
     }
@@ -55,23 +55,23 @@ QString BitcoinUnits::name(int unit)
 {
     if (Params().NetworkID() == CBaseChainParams::MAIN) {
         switch (unit) {
-        case FROST:
-            return QString("FROST");
-        case mFROST:
-            return QString("mFROST");
-        case uFROST:
-            return QString::fromUtf8("μFROST");
+        case MBPOS:
+            return QString("MBPOS");
+        case mMBPOS:
+            return QString("mMBPOS");
+        case uMBPOS:
+            return QString::fromUtf8("μMBPOS");
         default:
             return QString("???");
         }
     } else {
         switch (unit) {
-        case FROST:
-            return QString("tFROST");
-        case mFROST:
-            return QString("mtFROST");
-        case uFROST:
-            return QString::fromUtf8("μtFROST");
+        case MBPOS:
+            return QString("tMBPOS");
+        case mMBPOS:
+            return QString("mtMBPOS");
+        case uMBPOS:
+            return QString::fromUtf8("μtMBPOS");
         default:
             return QString("???");
         }
@@ -82,23 +82,23 @@ QString BitcoinUnits::description(int unit)
 {
     if (Params().NetworkID() == CBaseChainParams::MAIN) {
         switch (unit) {
-        case FROST:
-            return QString("FROST");
-        case mFROST:
-            return QString("Milli-FROST (1 / 1" THIN_SP_UTF8 "000)");
-        case uFROST:
-            return QString("Micro-FROST (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+        case MBPOS:
+            return QString("MBPOS");
+        case mMBPOS:
+            return QString("Milli-MBPOS (1 / 1" THIN_SP_UTF8 "000)");
+        case uMBPOS:
+            return QString("Micro-MBPOS (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
         default:
             return QString("???");
         }
     } else {
         switch (unit) {
-        case FROST:
-            return QString("TestFROSTs");
-        case mFROST:
-            return QString("Milli-TestFROST (1 / 1" THIN_SP_UTF8 "000)");
-        case uFROST:
-            return QString("Micro-TestFROST (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+        case MBPOS:
+            return QString("TestMBPOSs");
+        case mMBPOS:
+            return QString("Milli-TestMBPOS (1 / 1" THIN_SP_UTF8 "000)");
+        case uMBPOS:
+            return QString("Micro-TestMBPOS (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
         default:
             return QString("???");
         }
@@ -108,11 +108,11 @@ QString BitcoinUnits::description(int unit)
 qint64 BitcoinUnits::factor(int unit)
 {
     switch (unit) {
-    case FROST:
+    case MBPOS:
         return 100000000;
-    case mFROST:
+    case mMBPOS:
         return 100000;
-    case uFROST:
+    case uMBPOS:
         return 100;
     default:
         return 100000000;
@@ -122,11 +122,11 @@ qint64 BitcoinUnits::factor(int unit)
 int BitcoinUnits::decimals(int unit)
 {
     switch (unit) {
-    case FROST:
+    case MBPOS:
         return 8;
-    case mFROST:
+    case mMBPOS:
         return 5;
-    case uFROST:
+    case uMBPOS:
         return 2;
     default:
         return 0;

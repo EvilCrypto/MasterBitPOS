@@ -1,5 +1,5 @@
 /* XPM */
-static char * frost_256_xpm[] = {
+static char * mbpos_256_xpm[] = {
 "256 256 14112 3",
 "   	c None",
 ".  	c #FDB414",

@@ -5,7 +5,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifdef HAVE_CONFIG_H
-#include "config/bifrost-config.h"
+#include "config/masterbitpos-config.h"
 #endif
 
 #include "netbase.h"

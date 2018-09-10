@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BIFROST_ZEROCOIN_H
-#define BIFROST_ZEROCOIN_H
+#ifndef BIMBPOS_ZEROCOIN_H
+#define BIMBPOS_ZEROCOIN_H
 
 #include <amount.h>
 #include <limits.h>
@@ -247,4 +247,4 @@ public:
     int GetNeededSpends();
 };
 
-#endif //BIFROST_ZEROCOIN_H
+#endif //BIMBPOS_ZEROCOIN_H

@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BIFROST_MINTPOOL_H
-#define BIFROST_MINTPOOL_H
+#ifndef BIMBPOS_MINTPOOL_H
+#define BIMBPOS_MINTPOOL_H
 
 #include <map>
 #include <list>
@@ -50,4 +50,4 @@ public:
 };
 
 
-#endif //BIFROST_MINTPOOL_H
+#endif //BIMBPOS_MINTPOOL_H

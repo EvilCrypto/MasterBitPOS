@@ -9,7 +9,7 @@
 #include "stakeinput.h"
 #include "wallet.h"
 
-CZFrostStake::CZFrostStake(const libzerocoin::CoinSpend& spend)
+CZMbPosStake::CZMbPosStake(const libzerocoin::CoinSpend& spend)
 {
     this->nChecksum = spend.getAccumulatorChecksum();
     this->denom = spend.getDenomination();
@@ -19,7 +19,7 @@ CZFrostStake::CZFrostStake(const libzerocoin::CoinSpend& spend)
     fMint = false;
 }
 
-int CZFrostStake::GetChecksumHeightFromMint()
+int CZMbPosStake::GetChecksumHeightFromMint()
 {
     int nHeightChecksum = chainActive.Height() - Params().Zerocoin_RequiredStakeDepth();
 
@@ -30,20 +30,20 @@ int CZFrostStake::GetChecksumHeightFromMint()
     return GetChecksumHeight(nChecksum, denom);
 }
 
-int CZFrostStake::GetChecksumHeightFromSpend()
+int CZMbPosStake::GetChecksumHeightFromSpend()
 {
     return GetChecksumHeight(nChecksum, denom);
 }
 
-uint32_t CZFrostStake::GetChecksum()
+uint32_t CZMbPosStake::GetChecksum()
 {
     return nChecksum;
 }
 
-// The zFROST block index is the first appearance of the accumulator checksum that was used in the spend
+// The zMBPOS block index is the first appearance of the accumulator checksum that was used in the spend
 // note that this also means when staking that this checksum should be from a block that is beyond 60 minutes old and
 // 100 blocks deep.
-CBlockIndex* CZFrostStake::GetIndexFrom()
+CBlockIndex* CZMbPosStake::GetIndexFrom()
 {
     if (pindexFrom)
         return pindexFrom;
@@ -65,13 +65,13 @@ CBlockIndex* CZFrostStake::GetIndexFrom()
     return pindexFrom;
 }
 
-CAmount CZFrostStake::GetValue()
+CAmount CZMbPosStake::GetValue()
 {
     return denom * COIN;
 }
 
 //Use the first accumulator checkpoint that occurs 60 minutes after the block being staked from
-bool CZFrostStake::GetModifier(uint64_t& nStakeModifier)
+bool CZMbPosStake::GetModifier(uint64_t& nStakeModifier)
 {
     CBlockIndex* pindex = GetIndexFrom();
     if (!pindex)
@@ -91,15 +91,15 @@ bool CZFrostStake::GetModifier(uint64_t& nStakeModifier)
     }
 }
 
-CDataStream CZFrostStake::GetUniqueness()
+CDataStream CZMbPosStake::GetUniqueness()
 {
-    //The unique identifier for a zFROST is a hash of the serial
+    //The unique identifier for a zMBPOS is a hash of the serial
     CDataStream ss(SER_GETHASH, 0);
     ss << hashSerial;
     return ss;
 }
 
-bool CZFrostStake::CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut)
+bool CZMbPosStake::CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut)
 {
     CBlockIndex* pindexCheckpoint = GetIndexFrom();
     if (!pindexCheckpoint)
@@ -120,25 +120,25 @@ bool CZFrostStake::CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut)
     return true;
 }
 
-bool CZFrostStake::CreateTxOuts(CWallet* pwallet, vector<CTxOut>& vout, CAmount nTotal)
+bool CZMbPosStake::CreateTxOuts(CWallet* pwallet, vector<CTxOut>& vout, CAmount nTotal)
 {
-    //Create an output returning the zFROST that was staked
+    //Create an output returning the zMBPOS that was staked
     CTxOut outReward;
     libzerocoin::CoinDenomination denomStaked = libzerocoin::AmountToZerocoinDenomination(this->GetValue());
     CDeterministicMint dMint;
-    if (!pwallet->CreateZFROSTOutPut(denomStaked, outReward, dMint))
-        return error("%s: failed to create zFROST output", __func__);
+    if (!pwallet->CreateZMBPOSOutPut(denomStaked, outReward, dMint))
+        return error("%s: failed to create zMBPOS output", __func__);
     vout.emplace_back(outReward);
 
     //Add new staked denom to our wallet
     if (!pwallet->DatabaseMint(dMint))
-        return error("%s: failed to database the staked zFROST", __func__);
+        return error("%s: failed to database the staked zMBPOS", __func__);
 
     for (unsigned int i = 0; i < 3; i++) {
         CTxOut out;
         CDeterministicMint dMintReward;
-        if (!pwallet->CreateZFROSTOutPut(libzerocoin::CoinDenomination::ZQ_ONE, out, dMintReward))
-            return error("%s: failed to create zFROST output", __func__);
+        if (!pwallet->CreateZMBPOSOutPut(libzerocoin::CoinDenomination::ZQ_ONE, out, dMintReward))
+            return error("%s: failed to create zMBPOS output", __func__);
         vout.emplace_back(out);
 
         if (!pwallet->DatabaseMint(dMintReward))
@@ -148,48 +148,48 @@ bool CZFrostStake::CreateTxOuts(CWallet* pwallet, vector<CTxOut>& vout, CAmount 
     return true;
 }
 
-bool CZFrostStake::GetTxFrom(CTransaction& tx)
+bool CZMbPosStake::GetTxFrom(CTransaction& tx)
 {
     return false;
 }
 
-bool CZFrostStake::MarkSpent(CWallet *pwallet, const uint256& txid)
+bool CZMbPosStake::MarkSpent(CWallet *pwallet, const uint256& txid)
 {
-    CzFROSTTracker* zfrostTracker = pwallet->zfrostTracker.get();
+    CzMBPOSTracker* zmbposTracker = pwallet->zmbposTracker.get();
     CMintMeta meta;
-    if (!zfrostTracker->GetMetaFromStakeHash(hashSerial, meta))
+    if (!zmbposTracker->GetMetaFromStakeHash(hashSerial, meta))
         return error("%s: tracker does not have serialhash", __func__);
 
-    zfrostTracker->SetPubcoinUsed(meta.hashPubcoin, txid);
+    zmbposTracker->SetPubcoinUsed(meta.hashPubcoin, txid);
     return true;
 }
 
-//!FROST Stake
-bool CFrostStake::SetInput(CTransaction txPrev, unsigned int n)
+//!MBPOS Stake
+bool CMbPosStake::SetInput(CTransaction txPrev, unsigned int n)
 {
     this->txFrom = txPrev;
     this->nPosition = n;
     return true;
 }
 
-bool CFrostStake::GetTxFrom(CTransaction& tx)
+bool CMbPosStake::GetTxFrom(CTransaction& tx)
 {
     tx = txFrom;
     return true;
 }
 
-bool CFrostStake::CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut)
+bool CMbPosStake::CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut)
 {
     txIn = CTxIn(txFrom.GetHash(), nPosition);
     return true;
 }
 
-CAmount CFrostStake::GetValue()
+CAmount CMbPosStake::GetValue()
 {
     return txFrom.vout[nPosition].nValue;
 }
 
-bool CFrostStake::CreateTxOuts(CWallet* pwallet, vector<CTxOut>& vout, CAmount nTotal)
+bool CMbPosStake::CreateTxOuts(CWallet* pwallet, vector<CTxOut>& vout, CAmount nTotal)
 {
     vector<valtype> vSolutions;
     txnouttype whichType;
@@ -224,7 +224,7 @@ bool CFrostStake::CreateTxOuts(CWallet* pwallet, vector<CTxOut>& vout, CAmount n
     return true;
 }
 
-bool CFrostStake::GetModifier(uint64_t& nStakeModifier)
+bool CMbPosStake::GetModifier(uint64_t& nStakeModifier)
 {
     int nStakeModifierHeight = 0;
     int64_t nStakeModifierTime = 0;
@@ -238,16 +238,16 @@ bool CFrostStake::GetModifier(uint64_t& nStakeModifier)
     return true;
 }
 
-CDataStream CFrostStake::GetUniqueness()
+CDataStream CMbPosStake::GetUniqueness()
 {
-    //The unique identifier for a FROST stake is the outpoint
+    //The unique identifier for a MBPOS stake is the outpoint
     CDataStream ss(SER_NETWORK, 0);
     ss << nPosition << txFrom.GetHash();
     return ss;
 }
 
 //The block that the UTXO was added to the chain
-CBlockIndex* CFrostStake::GetIndexFrom()
+CBlockIndex* CMbPosStake::GetIndexFrom()
 {
     uint256 hashBlock = 0;
     CTransaction tx;

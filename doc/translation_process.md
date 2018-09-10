@@ -5,17 +5,17 @@ The PIVX Core project has been designed to support multiple localisations. This 
 
 ### Writing code with translations
 We use automated scripts to help extract translations in both Qt, and non-Qt source files. It is rarely necessary to manually edit the files in `src/qt/locale/`. The translation source files must adhere to the following format:
-`bifrost_xx_YY.ts or bifrost_xx.ts`
+`masterbitpos_xx_YY.ts or masterbitpos_xx.ts`
 
-`src/qt/locale/bifrost_en.ts` is treated in a special way. It is used as the source for all other translations. Whenever a string in the source code is changed, this file must be updated to reflect those changes. A custom script is used to extract strings from the non-Qt parts. This script makes use of `gettext`, so make sure that utility is installed (ie, `apt-get install gettext` on Ubuntu/Debian). Once this has been updated, `lupdate` (included in the Qt SDK) is used to update `pivx_en.ts`.
+`src/qt/locale/masterbitpos_en.ts` is treated in a special way. It is used as the source for all other translations. Whenever a string in the source code is changed, this file must be updated to reflect those changes. A custom script is used to extract strings from the non-Qt parts. This script makes use of `gettext`, so make sure that utility is installed (ie, `apt-get install gettext` on Ubuntu/Debian). Once this has been updated, `lupdate` (included in the Qt SDK) is used to update `pivx_en.ts`.
 
-To automatically regenerate the `bifrost_en.ts` file, run the following commands:
+To automatically regenerate the `masterbitpos_en.ts` file, run the following commands:
 ```sh
 cd src/
 make translate
 ```
 
-`contrib/bifrost-qt.pro` takes care of generating `.qm` (binary compiled) files from `.ts` (source files) files. It’s mostly automated, and you shouldn’t need to worry about it.
+`contrib/masterbitpos-qt.pro` takes care of generating `.qm` (binary compiled) files from `.ts` (source files) files. It’s mostly automated, and you shouldn’t need to worry about it.
 
 **Example Qt translation**
 ```cpp
@@ -29,14 +29,14 @@ When an updated source file is merged into the GitHub repo, Transifex will autom
 
 To create the pull-request, use the following commands:
 ```
-git add src/qt/bifroststrings.cpp src/qt/locale/bifrost_en.ts
+git add src/qt/masterbitposstrings.cpp src/qt/locale/masterbitpos_en.ts
 git commit
 ```
 
 ### Handling Plurals (in source files)
 When new plurals are added to the source file, it's important to do the following steps:
 
-1. Open `bifrost_en.ts` in Qt Linguist (included in the Qt SDK)
+1. Open `masterbitpos_en.ts` in Qt Linguist (included in the Qt SDK)
 2. Search for `%n`, which will take you to the parts in the translation that use plurals
 3. Look for empty `English Translation (Singular)` and `English Translation (Plural)` fields
 4. Add the appropriate strings for the singular and plural form of the base string
@@ -49,7 +49,7 @@ To create a new language template, you will need to edit the languages manifest 
 
 ```xml
 <qresource prefix="/translations">
-    <file alias="en">locale/bifrost_en.qm</file>
+    <file alias="en">locale/masterbitpos_en.qm</file>
     ...
 </qresource>
 ```

@@ -2,8 +2,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "zfrostcontroldialog.h"
-#include "ui_zfrostcontroldialog.h"
+#include "zmbposcontroldialog.h"
+#include "ui_zmbposcontroldialog.h"
 
 #include "accumulators.h"
 #include "main.h"
@@ -12,12 +12,12 @@
 using namespace std;
 using namespace libzerocoin;
 
-std::set<std::string> ZFrostControlDialog::setSelectedMints;
-std::set<CMintMeta> ZFrostControlDialog::setMints;
+std::set<std::string> ZMbPosControlDialog::setSelectedMints;
+std::set<CMintMeta> ZMbPosControlDialog::setMints;
 
-ZFrostControlDialog::ZFrostControlDialog(QWidget *parent) :
+ZMbPosControlDialog::ZMbPosControlDialog(QWidget *parent) :
     QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
-    ui(new Ui::ZFrostControlDialog),
+    ui(new Ui::ZMbPosControlDialog),
     model(0)
 {
     ui->setupUi(this);
@@ -31,19 +31,19 @@ ZFrostControlDialog::ZFrostControlDialog(QWidget *parent) :
     connect(ui->pushButtonAll, SIGNAL(clicked()), this, SLOT(ButtonAllClicked()));
 }
 
-ZFrostControlDialog::~ZFrostControlDialog()
+ZMbPosControlDialog::~ZMbPosControlDialog()
 {
     delete ui;
 }
 
-void ZFrostControlDialog::setModel(WalletModel *model)
+void ZMbPosControlDialog::setModel(WalletModel *model)
 {
     this->model = model;
     updateList();
 }
 
 //Update the tree widget
-void ZFrostControlDialog::updateList()
+void ZMbPosControlDialog::updateList()
 {
     // need to prevent the slot from being called each time something is changed
     ui->treeWidget->blockSignals(true);
@@ -128,7 +128,7 @@ void ZFrostControlDialog::updateList()
 }
 
 // Update the list when a checkbox is clicked
-void ZFrostControlDialog::updateSelection(QTreeWidgetItem* item, int column)
+void ZMbPosControlDialog::updateSelection(QTreeWidgetItem* item, int column)
 {
     // only want updates from non top level items that are available to spend
     if (item->parent() && column == COLUMN_CHECKBOX && !item->isDisabled()){
@@ -150,7 +150,7 @@ void ZFrostControlDialog::updateSelection(QTreeWidgetItem* item, int column)
 }
 
 // Update the Quantity and Amount display
-void ZFrostControlDialog::updateLabels()
+void ZMbPosControlDialog::updateLabels()
 {
     int64_t nAmount = 0;
     for (const CMintMeta& mint : setMints) {
@@ -159,14 +159,14 @@ void ZFrostControlDialog::updateLabels()
     }
 
     //update this dialog's labels
-    ui->labelZFrost_int->setText(QString::number(nAmount));
+    ui->labelZMbPos_int->setText(QString::number(nAmount));
     ui->labelQuantity_int->setText(QString::number(setSelectedMints.size()));
 
     //update PrivacyDialog labels
-    privacyDialog->setZFrostControlLabels(nAmount, setSelectedMints.size());
+    privacyDialog->setZMbPosControlLabels(nAmount, setSelectedMints.size());
 }
 
-std::vector<CMintMeta> ZFrostControlDialog::GetSelectedMints()
+std::vector<CMintMeta> ZMbPosControlDialog::GetSelectedMints()
 {
     std::vector<CMintMeta> listReturn;
     for (const CMintMeta& mint : setMints) {
@@ -178,7 +178,7 @@ std::vector<CMintMeta> ZFrostControlDialog::GetSelectedMints()
 }
 
 // select or deselect all of the mints
-void ZFrostControlDialog::ButtonAllClicked()
+void ZMbPosControlDialog::ButtonAllClicked()
 {
     ui->treeWidget->blockSignals(true);
     Qt::CheckState state = Qt::Checked;

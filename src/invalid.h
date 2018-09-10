@@ -2,10 +2,10 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BIFROST_INVALID_H
-#define BIFROST_INVALID_H
+#ifndef BIMBPOS_INVALID_H
+#define BIMBPOS_INVALID_H
 
-#endif //BIFROST_INVALID_H
+#endif //BIMBPOS_INVALID_H
 
 #include <libzerocoin/bignum.h>
 #include <univalue/include/univalue.h>

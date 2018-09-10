@@ -263,11 +263,11 @@ UniValue stop(const UniValue& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "stop\n"
-            "\nStop Bifrost server.");
+            "\nStop MasterBitPOS server.");
     // Event loop will exit after current HTTP requests have been handled, so
     // this reply will get back to the client.
     StartShutdown();
-    return "Bifrost server stopping";
+    return "MasterBitPOS server stopping";
 }
 
 
@@ -351,37 +351,37 @@ static const CRPCCommand vRPCCommands[] =
         {"hidden", "reconsiderblock", &reconsiderblock, true, true, false},
         {"hidden", "setmocktime", &setmocktime, true, false, false},
 
-        /* Bifrost features */
-        {"bifrost", "masternode", &masternode, true, true, false},
-        {"bifrost", "listmasternodes", &listmasternodes, true, true, false},
-        {"bifrost", "getmasternodecount", &getmasternodecount, true, true, false},
-        {"bifrost", "masternodeconnect", &masternodeconnect, true, true, false},
-        {"bifrost", "createmasternodebroadcast", &createmasternodebroadcast, true, true, false},
-        {"bifrost", "decodemasternodebroadcast", &decodemasternodebroadcast, true, true, false},
-        {"bifrost", "relaymasternodebroadcast", &relaymasternodebroadcast, true, true, false},
-        {"bifrost", "masternodecurrent", &masternodecurrent, true, true, false},
-        {"bifrost", "masternodedebug", &masternodedebug, true, true, false},
-        {"bifrost", "startmasternode", &startmasternode, true, true, false},
-        {"bifrost", "createmasternodekey", &createmasternodekey, true, true, false},
-        {"bifrost", "getmasternodeoutputs", &getmasternodeoutputs, true, true, false},
-        {"bifrost", "listmasternodeconf", &listmasternodeconf, true, true, false},
-        {"bifrost", "getmasternodestatus", &getmasternodestatus, true, true, false},
-        {"bifrost", "getmasternodewinners", &getmasternodewinners, true, true, false},
-        {"bifrost", "getmasternodescores", &getmasternodescores, true, true, false},
-        {"bifrost", "mnbudget", &mnbudget, true, true, false},
-        {"bifrost", "preparebudget", &preparebudget, true, true, false},
-        {"bifrost", "submitbudget", &submitbudget, true, true, false},
-        {"bifrost", "mnbudgetvote", &mnbudgetvote, true, true, false},
-        {"bifrost", "getbudgetvotes", &getbudgetvotes, true, true, false},
-        {"bifrost", "getnextsuperblock", &getnextsuperblock, true, true, false},
-        {"bifrost", "getbudgetprojection", &getbudgetprojection, true, true, false},
-        {"bifrost", "getbudgetinfo", &getbudgetinfo, true, true, false},
-        {"bifrost", "mnbudgetrawvote", &mnbudgetrawvote, true, true, false},
-        {"bifrost", "mnfinalbudget", &mnfinalbudget, true, true, false},
-        {"bifrost", "checkbudgets", &checkbudgets, true, true, false},
-        {"bifrost", "mnsync", &mnsync, true, true, false},
-        {"bifrost", "spork", &spork, true, true, false},
-        {"bifrost", "getpoolinfo", &getpoolinfo, true, true, false},
+        /* MasterBitPOS features */
+        {"masterbitpos", "masternode", &masternode, true, true, false},
+        {"masterbitpos", "listmasternodes", &listmasternodes, true, true, false},
+        {"masterbitpos", "getmasternodecount", &getmasternodecount, true, true, false},
+        {"masterbitpos", "masternodeconnect", &masternodeconnect, true, true, false},
+        {"masterbitpos", "createmasternodebroadcast", &createmasternodebroadcast, true, true, false},
+        {"masterbitpos", "decodemasternodebroadcast", &decodemasternodebroadcast, true, true, false},
+        {"masterbitpos", "relaymasternodebroadcast", &relaymasternodebroadcast, true, true, false},
+        {"masterbitpos", "masternodecurrent", &masternodecurrent, true, true, false},
+        {"masterbitpos", "masternodedebug", &masternodedebug, true, true, false},
+        {"masterbitpos", "startmasternode", &startmasternode, true, true, false},
+        {"masterbitpos", "createmasternodekey", &createmasternodekey, true, true, false},
+        {"masterbitpos", "getmasternodeoutputs", &getmasternodeoutputs, true, true, false},
+        {"masterbitpos", "listmasternodeconf", &listmasternodeconf, true, true, false},
+        {"masterbitpos", "getmasternodestatus", &getmasternodestatus, true, true, false},
+        {"masterbitpos", "getmasternodewinners", &getmasternodewinners, true, true, false},
+        {"masterbitpos", "getmasternodescores", &getmasternodescores, true, true, false},
+        {"masterbitpos", "mnbudget", &mnbudget, true, true, false},
+        {"masterbitpos", "preparebudget", &preparebudget, true, true, false},
+        {"masterbitpos", "submitbudget", &submitbudget, true, true, false},
+        {"masterbitpos", "mnbudgetvote", &mnbudgetvote, true, true, false},
+        {"masterbitpos", "getbudgetvotes", &getbudgetvotes, true, true, false},
+        {"masterbitpos", "getnextsuperblock", &getnextsuperblock, true, true, false},
+        {"masterbitpos", "getbudgetprojection", &getbudgetprojection, true, true, false},
+        {"masterbitpos", "getbudgetinfo", &getbudgetinfo, true, true, false},
+        {"masterbitpos", "mnbudgetrawvote", &mnbudgetrawvote, true, true, false},
+        {"masterbitpos", "mnfinalbudget", &mnfinalbudget, true, true, false},
+        {"masterbitpos", "checkbudgets", &checkbudgets, true, true, false},
+        {"masterbitpos", "mnsync", &mnsync, true, true, false},
+        {"masterbitpos", "spork", &spork, true, true, false},
+        {"masterbitpos", "getpoolinfo", &getpoolinfo, true, true, false},
 
 #ifdef ENABLE_WALLET
         /* Wallet */
@@ -446,11 +446,11 @@ static const CRPCCommand vRPCCommands[] =
         {"zerocoin", "exportzerocoins", &exportzerocoins, false, false, true},
         {"zerocoin", "reconsiderzerocoins", &reconsiderzerocoins, false, false, true},
         {"zerocoin", "getspentzerocoinamount", &getspentzerocoinamount, false, false, false},
-        {"zerocoin", "getzfrostseed", &getzfrostseed, false, false, true},
-        {"zerocoin", "setzfrostseed", &setzfrostseed, false, false, true},
+        {"zerocoin", "getzmbposseed", &getzmbposseed, false, false, true},
+        {"zerocoin", "setzmbposseed", &setzmbposseed, false, false, true},
         {"zerocoin", "generatemintlist", &generatemintlist, false, false, true},
-        {"zerocoin", "searchdzfrost", &searchdzfrost, false, false, true},
-        {"zerocoin", "dzfroststate", &dzfroststate, false, false, true}
+        {"zerocoin", "searchdzmbpos", &searchdzmbpos, false, false, true},
+        {"zerocoin", "dzmbposstate", &dzmbposstate, false, false, true}
 
 #endif // ENABLE_WALLET
 };
@@ -614,7 +614,7 @@ std::vector<std::string> CRPCTable::listCommands() const
 
 std::string HelpExampleCli(string methodname, string args)
 {
-    return "> bifrost-cli " + methodname + " " + args + "\n";
+    return "> masterbitpos-cli " + methodname + " " + args + "\n";
 }
 
 std::string HelpExampleRpc(string methodname, string args)

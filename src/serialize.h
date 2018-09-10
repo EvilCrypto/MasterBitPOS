@@ -4,8 +4,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BIFROST_SERIALIZE_H
-#define BIFROST_SERIALIZE_H
+#ifndef BIMBPOS_SERIALIZE_H
+#define BIMBPOS_SERIALIZE_H
 
 #include <algorithm>
 #include <assert.h>
@@ -965,4 +965,4 @@ public:
     }
 };
 
-#endif // BIFROST_SERIALIZE_H
+#endif // BIMBPOS_SERIALIZE_H

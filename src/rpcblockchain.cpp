@@ -118,12 +118,12 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool tx
 
     result.push_back(Pair("moneysupply",ValueFromAmount(blockindex->nMoneySupply)));
 
-    UniValue zfrostObj(UniValue::VOBJ);
+    UniValue zmbposObj(UniValue::VOBJ);
     for (auto denom : libzerocoin::zerocoinDenomList) {
-        zfrostObj.push_back(Pair(to_string(denom), ValueFromAmount(blockindex->mapZerocoinSupply.at(denom) * (denom*COIN))));
+        zmbposObj.push_back(Pair(to_string(denom), ValueFromAmount(blockindex->mapZerocoinSupply.at(denom) * (denom*COIN))));
     }
-    zfrostObj.push_back(Pair("total", ValueFromAmount(blockindex->GetZerocoinSupply())));
-    result.push_back(Pair("zFROSTsupply", zfrostObj));
+    zmbposObj.push_back(Pair("total", ValueFromAmount(blockindex->GetZerocoinSupply())));
+    result.push_back(Pair("zMBPOSsupply", zmbposObj));
 
     return result;
 }
@@ -243,7 +243,7 @@ UniValue getrawmempool(const UniValue& params, bool fHelp)
             "{                           (json object)\n"
             "  \"transactionid\" : {       (json object)\n"
             "    \"size\" : n,             (numeric) transaction size in bytes\n"
-            "    \"fee\" : n,              (numeric) transaction fee in bifrost\n"
+            "    \"fee\" : n,              (numeric) transaction fee in masterbitpos\n"
             "    \"time\" : n,             (numeric) local time transaction entered pool in seconds since 1 Jan 1970 GMT\n"
             "    \"height\" : n,           (numeric) block height when transaction entered pool\n"
             "    \"startingpriority\" : n, (numeric) priority when transaction entered pool\n"
@@ -323,17 +323,17 @@ UniValue getblock(const UniValue& params, bool fHelp)
             "  \"previousblockhash\" : \"hash\",  (string) The hash of the previous block\n"
             "  \"nextblockhash\" : \"hash\"       (string) The hash of the next block\n"
             "  \"moneysupply\" : \"supply\"       (numeric) The money supply when this block was added to the blockchain\n"
-            "  \"zFROSTsupply\" :\n"
+            "  \"zMBPOSsupply\" :\n"
             "  {\n"
-            "     \"1\" : n,            (numeric) supply of 1 zFROST denomination\n"
-            "     \"5\" : n,            (numeric) supply of 5 zFROST denomination\n"
-            "     \"10\" : n,           (numeric) supply of 10 zFROST denomination\n"
-            "     \"50\" : n,           (numeric) supply of 50 zFROST denomination\n"
-            "     \"100\" : n,          (numeric) supply of 100 zFROST denomination\n"
-            "     \"500\" : n,          (numeric) supply of 500 zFROST denomination\n"
-            "     \"1000\" : n,         (numeric) supply of 1000 zFROST denomination\n"
-            "     \"5000\" : n,         (numeric) supply of 5000 zFROST denomination\n"
-            "     \"total\" : n,        (numeric) The total supply of all zFROST denominations\n"
+            "     \"1\" : n,            (numeric) supply of 1 zMBPOS denomination\n"
+            "     \"5\" : n,            (numeric) supply of 5 zMBPOS denomination\n"
+            "     \"10\" : n,           (numeric) supply of 10 zMBPOS denomination\n"
+            "     \"50\" : n,           (numeric) supply of 50 zMBPOS denomination\n"
+            "     \"100\" : n,          (numeric) supply of 100 zMBPOS denomination\n"
+            "     \"500\" : n,          (numeric) supply of 500 zMBPOS denomination\n"
+            "     \"1000\" : n,         (numeric) supply of 1000 zMBPOS denomination\n"
+            "     \"5000\" : n,         (numeric) supply of 5000 zMBPOS denomination\n"
+            "     \"total\" : n,        (numeric) The total supply of all zMBPOS denominations\n"
             "  }\n"
             "}\n"
 
@@ -485,8 +485,8 @@ UniValue gettxout(const UniValue& params, bool fHelp)
             "     \"hex\" : \"hex\",        (string) \n"
             "     \"reqSigs\" : n,          (numeric) Number of required signatures\n"
             "     \"type\" : \"pubkeyhash\", (string) The type, eg pubkeyhash\n"
-            "     \"addresses\" : [          (array of string) array of bifrost addresses\n"
-            "     \"bifrostaddress\"   	 	(string) bifrost address\n"
+            "     \"addresses\" : [          (array of string) array of masterbitpos addresses\n"
+            "     \"masterbitposaddress\"   	 	(string) masterbitpos address\n"
             "        ,...\n"
             "     ]\n"
             "  },\n"

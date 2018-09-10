@@ -2,8 +2,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BIFROST_CSPORKDB_H
-#define BIFROST_CSPORKDB_H
+#ifndef BIMBPOS_CSPORKDB_H
+#define BIMBPOS_CSPORKDB_H
 
 #include <boost/filesystem/path.hpp>
 #include "leveldbwrapper.h"
@@ -25,4 +25,4 @@ public:
 };
 
 
-#endif //BIFROST_CSPORKDB_H
+#endif //BIMBPOS_CSPORKDB_H

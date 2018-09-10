@@ -9,7 +9,7 @@
 #define BITCOIN_MAIN_H
 
 #if defined(HAVE_CONFIG_H)
-#include "config/bifrost-config.h"
+#include "config/masterbitpos-config.h"
 #endif
 
 #include "amount.h"
@@ -241,7 +241,7 @@ bool DisconnectBlocksAndReprocess(int blocks);
 
 // ***TODO***
 double ConvertBitsToDouble(unsigned int nBits);
-int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount, bool isZFROSTStake);
+int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount, bool isZMBPOSStake);
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader* pblock, bool fProofOfStake);
 
 bool IsMasternodeCollateral(CAmount value);
@@ -366,9 +366,9 @@ bool IsTransactionInChain(const uint256& txId, int& nHeightTx, CTransaction& tx)
 bool IsTransactionInChain(const uint256& txId, int& nHeightTx);
 bool IsBlockHashInChain(const uint256& hashBlock);
 bool ValidOutPoint(const COutPoint out, int nHeight);
-void RecalculateZFROSTSpent();
-void RecalculateZFROSTMinted();
-bool RecalculateFROSTSupply(int nHeightStart);
+void RecalculateZMBPOSSpent();
+void RecalculateZMBPOSMinted();
+bool RecalculateMBPOSSupply(int nHeightStart);
 bool ReindexAccumulators(list<uint256>& listMissingCheckpoints, string& strError);
 
 
