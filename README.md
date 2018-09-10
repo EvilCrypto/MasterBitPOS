@@ -17,7 +17,7 @@ MasterBitPOS repository.
 <tr><td>Type</td><td>Pure PoS</td></tr>
 <tr><td>Block Time</td><td>60 Seconds</td></tr>
 <tr><td>Difficulty Retargeting</td><td>Every Block</td></tr>
-<tr><td>Max Coin Supply</td><td>~66,318,600 FROST</td></tr>
+<tr><td>Max Coin Supply</td><td>~66,318,600 MBPOS</td></tr>
 <tr><td>Premine/Initial Supply</td><td>1.13%*</td></tr>
 </table>
 
