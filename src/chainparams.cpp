@@ -53,20 +53,7 @@ static void convertSeed6(std::vector<CAddress>& vSeedsOut, const SeedSpec6* data
 // + Contains no strange transactions
 static Checkpoints::MapCheckpoints mapCheckpoints =
     boost::assign::map_list_of
-    (0, uint256("0x000006e6fa091a20a38fe6f0212d03e5df72b44d76e2eb4246b4d366dbb01faf"))
-    (1, uint256("0x0000066df97de78fdde0f1cd5e78cf7ff17e1a8d6cbf4137afa99f1587fe7d2e"))
-    (2, uint256("0x00000b7cf8dc27bc4c98c91089adf58f5ec673e022c1b8ea0d5146d13bc49bb7"))
-    (61, uint256("0x0000001e7aa6833af7660e4e58d739560af233922fa8f043b103af40d8043ee7"))
-    (200, uint256("0x000001b018bb282b454914e42f9653b0e26fb8065562e50cbd9ce63283904b6a"))
-    (1000, uint256("0x6ba268b0a5a87360b5942084a03e44b10b99bc9942153843be8f30be9946d709"))
-    (5000, uint256("0x7b905329a6adabf53cba6a4c69fe4152a14a1154852f8459e7928f3566a99434"))
-    (10000, uint256("0x35f56a42078ed92afa103fa5d8fe0684e0d5f800350f5230e3bf5e56f83fcc08"))
-    (15000, uint256("0x278fa794765bcaf37b9b3f61c14584c2957b602cda5512f02a16dda8f702f751"))
-    (100000, uint256("0xbc47e4959664446a7ebc294446c2693e3e441eee2748b00defbd9248d498fd7d"))
-    (120290, uint256("0xe6fbbf7e0df5c271eab87e05060c6bb4c13a97f0cb9299dbe824a119855f028f"))
-    (140000, uint256("0xa7dc9c64e7b7902288c3fa82614edf09e70349f96e2aa71ade15343f15e61e04"))
-    (165440, uint256("0xeac04567483851d28843e3b235fc09694758a2d29e929e63add5f1baaae82109")) // Following fork
-    (169300, uint256("0xd0bbbc3530be25a6324e3e94be931fc0e225f97ce95b9f804aff0f6d7e14286b"));
+    (0, uint256("0xa38fe47ad0c10d368ea752a31d40b6ccafa16233a94c499dd41d22c77901fa47"));
 
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
@@ -78,7 +65,7 @@ static const Checkpoints::CCheckpointData data = {
 
 static Checkpoints::MapCheckpoints mapCheckpointsTestnet =
     boost::assign::map_list_of
-    (0, uint256("0x0000040df09b15ba874400ba995f342b82573864b9ee10c255dc4448ce334438"));
+    (0, uint256("0x50438f4aeedb8ce6c8ca5318fd8382fd27debfb50ec15be45e9afaa8aede6b94"));
 
 static const Checkpoints::CCheckpointData dataTestnet = {
     &mapCheckpointsTestnet,
@@ -191,8 +178,8 @@ public:
         genesis.nNonce = 7065194;
 
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x000006e6fa091a20a38fe6f0212d03e5df72b44d76e2eb4246b4d366dbb01faf"));
-        assert(genesis.hashMerkleRoot == uint256("0xa6754bc40268cb44d68aa72471945408b68ade886e6b8c5fd18c933d441c087d"));
+        assert(hashGenesisBlock == uint256("0xa38fe47ad0c10d368ea752a31d40b6ccafa16233a94c499dd41d22c77901fa47"));
+        assert(genesis.hashMerkleRoot == uint256("0x9ac550bae4c9c31e56460cc3b276c40533792e44e4f3184549e0a50867b2dfda"));
 
         vSeeds.push_back(CDNSSeedData("0",  "dnsseed.masterbitposcoin.io"));
 
@@ -290,7 +277,7 @@ public:
         genesis.nNonce = 2733486;
 
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x0000040df09b15ba874400ba995f342b82573864b9ee10c255dc4448ce334438"));
+        assert(hashGenesisBlock == uint256("0x50438f4aeedb8ce6c8ca5318fd8382fd27debfb50ec15be45e9afaa8aede6b94"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
