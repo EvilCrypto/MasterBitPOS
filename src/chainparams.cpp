@@ -133,15 +133,15 @@ public:
         nMaxMoneyOut = 21000000 * COIN;
 
         /** Major code base update **/
-        nWalletForkBlock = 165437;
-        nWalletForkDblBlock = 175437;       // +10000
-        nWalletForkResumeBlock = 185437;    // +20000
+        nWalletForkBlock = 1000;
+        nWalletForkDblBlock = 2000;       // +1000
+        nWalletForkResumeBlock = 3000;    // +2000
 
         /** Height or Time Based Activations **/
         nLastPOWBlock = 200;
         nModifierUpdateBlock = 1;
         nZerocoinStartHeight = nWalletForkBlock;
-        nZerocoinStartTime = 1533903794;
+        nZerocoinStartTime = 1537142253;
         nBlockEnforceSerialRange = 1; //Enforce serial range starting this block
         nBlockRecalculateAccumulators = nWalletForkBlock; //Trigger a recalculation of accumulators
         nBlockFirstFraudulent = 500000; //First block that bad serials emerged
@@ -261,7 +261,7 @@ public:
         nModifierUpdateBlock = 51197; //approx Mon, 17 Apr 2017 04:00:00 GMT
         nMaxMoneyOut = 43199500 * COIN;
         nZerocoinStartHeight = 201576;
-        nZerocoinStartTime = 1501776000;
+        nZerocoinStartTime = 1537142253;
         nBlockEnforceSerialRange = 1; //Enforce serial range starting this block
         nBlockRecalculateAccumulators = 9908000; //Trigger a recalculation of accumulators
         nBlockFirstFraudulent = 9891737; //First block that bad serials emerged
