@@ -235,10 +235,10 @@ QT_TRANSLATE_NOOP("masterbitpos-core", ""
 QT_TRANSLATE_NOOP("masterbitpos-core", ""
 "You must specify a masternodeprivkey in the configuration. Please see "
 "documentation for help."),
-QT_TRANSLATE_NOOP("masterbitpos-core", "(89229 could be used only on mainnet)"),
+QT_TRANSLATE_NOOP("masterbitpos-core", "(23693 could be used only on mainnet)"),
 QT_TRANSLATE_NOOP("masterbitpos-core", "(default: %s)"),
 QT_TRANSLATE_NOOP("masterbitpos-core", "(default: 1)"),
-QT_TRANSLATE_NOOP("masterbitpos-core", "(must be 89229 for mainnet)"),
+QT_TRANSLATE_NOOP("masterbitpos-core", "(must be 23693 for mainnet)"),
 QT_TRANSLATE_NOOP("masterbitpos-core", "<category> can be:"),
 QT_TRANSLATE_NOOP("masterbitpos-core", "Accept command line and JSON-RPC commands"),
 QT_TRANSLATE_NOOP("masterbitpos-core", "Accept connections from outside (default: 1 if no -proxy or -connect)"),

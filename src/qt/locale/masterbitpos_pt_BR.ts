@@ -3728,8 +3728,8 @@ https://www.transifex.com/masterbitpos-project/masterbitpos-project-translations
         <translation>Você deve especificar uma masternodeprivkey na configuração. Favor verificar o manual para obter ajuda.</translation>
     </message>
     <message>
-        <source>(89229 could be used only on mainnet)</source>
-        <translation>(89229 could be used only on mainnet)</translation>
+        <source>(23693 could be used only on mainnet)</source>
+        <translation>(23693 could be used only on mainnet)</translation>
     </message>
     <message>
         <source>(default: %s)</source>
@@ -3740,8 +3740,8 @@ https://www.transifex.com/masterbitpos-project/masterbitpos-project-translations
         <translation>(padrão: 1)</translation>
     </message>
     <message>
-        <source>(must be 89229 for mainnet)</source>
-        <translation>(deve ser 89229 para mainnet)</translation>
+        <source>(must be 23693 for mainnet)</source>
+        <translation>(deve ser 23693 para mainnet)</translation>
     </message>
     <message>
         <source>Accept connections from outside (default: 1 if no -proxy or -connect)</source>

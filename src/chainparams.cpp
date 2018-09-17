@@ -118,7 +118,7 @@ public:
         pchMessageStart[2] = 0xd2;
         pchMessageStart[3] = 0xc5;
         vAlertPubKey = ParseHex("045842c614ccb80d184542d6b45a6851f58de36fc898d6a38f32b4b7af28a67e16f2b809c1425c6d95eb8b39aa3e79729bfe59f6854450229ea6572045455962b7");
-        nDefaultPort = 89229;
+        nDefaultPort = 23693;
         bnProofOfWorkLimit = ~uint256(0) >> 20; // MasterBitPOS starting difficulty is 1 / 2^12
         nSubsidyHalvingInterval = 210000;
         nMaxReorganizationDepth = 100;
